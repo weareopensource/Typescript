@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  weareopensourceNode:
+    container_name: weareopensourceNode
+    image: weareopensource/node:latest
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - weareopensourceNode:/data
+    networks:
+      - mongo
+    depends_on:
+      - mongo
+    environment:
+      - 'WAOS_NODE_db_uri=mongodb://mongo:27017/WaosNodeDev'
+      - 'WAOS_NODE_host=0.0.0.0'
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo:/data
+    networks:
+      - mongo
+
+networks:
+  mongo:
+    driver: bridge
+
+volumes:
+  weareopensourceNode:
+  mongo:

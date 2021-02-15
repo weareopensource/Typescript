@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - 13
+  - 14
+os:
+  - linux
+cache:
+  directories:
+    - node_modules
+services:
+  - mongodb
+install:
+  - npm i
+before_script:
+  - npm rebuild bcrypt --update-binary
+after_success:
+  - npm run test:coveralls
+jobs:
+  include:
+    - stage: allow_failures
+      node_js: 15
+#  - stage: deploy
+#    node_js: lts/*
+#    deploy:
+#      provider: script
+#      cleanup: true
+#      script: ./scripts/ci/deploy-travis.sh
+#      on:
+#        branch: master
