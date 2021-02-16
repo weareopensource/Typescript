@@ -1,31 +1,32 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteUpload = exports.update = exports.getStream = exports.get = void 0;
+const tslib_1 = require("tslib");
 /**
  * Module dependencies
  */
-const path = require('path');
-
-const multer = require(path.resolve('./lib/services/multer'));
-const UploadRepository = require('../repositories/uploads.repository');
-
+const multer_1 = require("../../../lib/services/multer");
+const UploadRepository = tslib_1.__importStar(require("../repositories/uploads.repository"));
 /**
  * @desc Function to ask repository to get an upload
  * @param {String} uploadName
  * @return {Promise} Upload
  */
-exports.get = async (uploadName) => {
-  const result = await UploadRepository.get(uploadName);
-  return Promise.resolve(result);
-};
-
+async function get(uploadName) {
+    const result = await UploadRepository.get(uploadName);
+    return Promise.resolve(result);
+}
+exports.get = get;
 /**
  * @desc Function to ask repository to get stream of chunks data
  * @param {Object} Upload
  * @return {Promise} result stream
  */
-exports.getStream = async (upload) => {
-  const result = await UploadRepository.getStream(upload);
-  return Promise.resolve(result);
-};
-
+async function getStream(upload) {
+    const result = await UploadRepository.getStream(upload);
+    return Promise.resolve(result);
+}
+exports.getStream = getStream;
 /**
  * @desc Function to ask repository to update an upload
  * @param {Object} req.file
@@ -33,24 +34,26 @@ exports.getStream = async (upload) => {
  * @param {String} kind, upload configuration path (important for futur transformations)
  * @return {Promise} Upload
  */
-exports.update = async (file, user, kind) => {
-  const update = {
-    filename: await multer.generateFileName(file.filename || file.originalname),
-    metadata: {
-      user: user.id,
-      kind: kind || null,
-    },
-  };
-  const result = await UploadRepository.update(file._id, update);
-  return Promise.resolve(result);
-};
-
+async function update(file, user, kind) {
+    const upload = {
+        filename: await multer_1.generateFileName(file.filename || file.originalname),
+        metadata: {
+            user: user.id,
+            kind: kind || null,
+        },
+    };
+    const result = await UploadRepository.update(file._id, upload);
+    return Promise.resolve(result);
+}
+exports.update = update;
 /**
  * @desc Function to ask repository to delete chunks data
  * @param {Object} Upload
  * @return {Promise} confirmation of delete
  */
-exports.delete = async (upload) => {
-  const result = await UploadRepository.delete(upload);
-  return Promise.resolve(result);
-};
+async function deleteUpload(upload) {
+    const result = await UploadRepository.deleteUpload(upload);
+    return Promise.resolve(result);
+}
+exports.deleteUpload = deleteUpload;
+//# sourceMappingURL=uploads.service.js.map

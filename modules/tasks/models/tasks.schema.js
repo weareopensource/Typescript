@@ -1,17 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 /**
  * Module dependencies
  */
-const Joi = require('@hapi/joi');
-
+const joi_1 = tslib_1.__importDefault(require("@hapi/joi"));
 /**
  *  Data Schema
  */
-const TaskSchema = Joi.object().keys({
-  title: Joi.string().trim().default('').required(),
-  description: Joi.string().allow('').default('').required(),
-  user: Joi.string().trim().default(''),
+const TaskSchema = joi_1.default.object().keys({
+    title: joi_1.default.string().trim().default('').required(),
+    description: joi_1.default.string().allow('').default('').required(),
+    user: joi_1.default.string().trim().default(''),
 });
-
-module.exports = {
-  Task: TaskSchema,
-};
+exports.default = TaskSchema;
+//# sourceMappingURL=tasks.schema.js.map

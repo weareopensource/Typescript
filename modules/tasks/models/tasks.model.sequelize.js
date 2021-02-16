@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Data Model Sequelize
  */
@@ -7,6 +8,6 @@
 //     description: DataTypes.STRING,
 //     user: DataTypes.STRING,
 //   });
-
 //   return TaskSequelize;
 // };
+//# sourceMappingURL=tasks.model.sequelize.js.map

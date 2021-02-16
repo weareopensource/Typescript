@@ -1,74 +1,91 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.importUpload = exports.purge = exports.deleteMany = exports.deleteUpload = exports.update = exports.getStream = exports.get = exports.list = void 0;
+const tslib_1 = require("tslib");
 /**
  * Module dependencies
  */
-const path = require('path');
-const mongoose = require('mongoose');
-const { createModel } = require('mongoose-gridfs');
-
-const AppError = require(path.resolve('./lib/helpers/AppError'));
-const Attachment = createModel({ bucketName: 'uploads', model: 'Uploads' });
-const Uploads = mongoose.model('Uploads');
-
+const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
+const mongoose_gridfs_1 = require("mongoose-gridfs");
+const AppError_1 = tslib_1.__importDefault(require("../../../lib/helpers/AppError"));
+const uploads_model_mongoose_1 = tslib_1.__importDefault(require("../models/uploads.model.mongoose"));
+const Attachment = mongoose_gridfs_1.createModel({ bucketName: 'uploads', model: 'Uploads' });
 /**
  * @desc Function to get all upload in db with filter or not
  * @param {Object} Filter
  * @return {Array} uploads
  */
-exports.list = (filter) => Uploads.find(filter).select('filename uploadDate contentType').sort('-createdAt').exec();
-
+function list(filter) {
+    return uploads_model_mongoose_1.default.find(filter)
+        .select('filename uploadDate contentType')
+        .sort('-createdAt')
+        .exec();
+}
+exports.list = list;
 /**
  * @desc Function to get an upload from db
  * @param {String} uploadName
  * @return {Stream} upload
  */
-exports.get = (uploadName) => Uploads.findOne({ filename: uploadName }).exec();
-
+function get(uploadName) {
+    return uploads_model_mongoose_1.default.findOne({ filename: uploadName })
+        .exec();
+}
+exports.get = get;
 /**
  * @desc Function to get an upload stream from db
  * @param {Object} Upload
  * @return {Stream} upload
  */
-exports.getStream = (upload) => Attachment.read(upload);
-
+function getStream(upload) {
+    return Attachment.read(upload);
+}
+exports.getStream = getStream;
 /**
  * @desc Function to update an upload in db
  * @param {ObjectID} upload ID
- * @param {Object} update
+ * @param {Object} upload
  * @return {Object} upload updated
  */
-exports.update = (id, update) => Uploads.findOneAndUpdate({ _id: id }, update, { new: true }).exec();
-
+function update(id, upload) {
+    return uploads_model_mongoose_1.default.findOneAndUpdate({ _id: id }, upload, { new: true })
+        .exec();
+}
+exports.update = update;
 /**
  * @desc Function to delete an upload from db
  * @param {Object} upload
  * @return {Object} confirmation of delete
  */
-exports.delete = async (upload) => {
-  if (!upload._id) upload = await Uploads.findOne({ filename: upload.filename }).exec();
-  if (upload) {
-    Attachment.unlink(upload._id, (err, unlinked) => {
-      if (err) throw new AppError('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
-      return unlinked;
-    });
-  }
-};
-
+async function deleteUpload(upload) {
+    if (!upload._id)
+        upload = await uploads_model_mongoose_1.default.findOne({ filename: upload.filename }).exec();
+    if (upload) {
+        Attachment.unlink(upload._id, (err, unlinked) => {
+            if (err)
+                throw new AppError_1.default('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
+            return unlinked;
+        });
+    }
+}
+exports.deleteUpload = deleteUpload;
 /**
  * @desc Function to delete uploads of one user in db
  * @param {Object} filter
  * @return {Object} confirmation of delete
  */
-exports.deleteMany = async (filter) => {
-  const uploads = await this.list(filter);
-  uploads.forEach((upload) => {
-    Attachment.unlink(upload._id, (err, unlinked) => {
-      if (err) throw new AppError('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
-      return unlinked;
+async function deleteMany(filter) {
+    const uploads = await list(filter);
+    uploads.forEach((upload) => {
+        Attachment.unlink(upload._id, (err, unlinked) => {
+            if (err)
+                throw new AppError_1.default('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
+            return unlinked;
+        });
     });
-  });
-  return { deletedCount: uploads.length };
-};
-
+    return { deletedCount: uploads.length };
+}
+exports.deleteMany = deleteMany;
 /**
  * @desc Function to purge uploads by kind if they are not referenced in another collection
  * @param {String} kind - metadata kind to match
@@ -76,53 +93,54 @@ exports.deleteMany = async (filter) => {
  * @param {String} key - name of the key to check id
  * @return {Object} confirmation of delete
  */
-exports.purge = async (kind, collection, key) => {
-  const toDelete = await Uploads.aggregate([
-    { $match: { 'metadata.kind': kind } },
-    {
-      $lookup: {
-        from: collection,
-        localField: 'filename',
-        foreignField: key,
-        as: 'references',
-      },
-    },
-    { $match: { references: [] } },
-  ]);
-  toDelete.forEach(async (id) => {
-    Attachment.unlink(id, (err, unlinked) => {
-      if (err) throw new AppError('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
-      return unlinked;
+async function purge(kind, collection, key) {
+    const toDelete = await uploads_model_mongoose_1.default.aggregate([
+        { $match: { 'metadata.kind': kind } },
+        {
+            $lookup: {
+                from: collection,
+                localField: 'filename',
+                foreignField: key,
+                as: 'references',
+            },
+        },
+        { $match: { references: [] } },
+    ]);
+    toDelete.forEach(async (id) => {
+        Attachment.unlink(id, (err, unlinked) => {
+            if (err)
+                throw new AppError_1.default('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });
+            return unlinked;
+        });
     });
-  });
-  return { deletedCount: toDelete.length };
-};
-
+    return { deletedCount: toDelete.length };
+}
+exports.purge = purge;
 /**
  * @desc Function to import list of uploads in db
- * @param {[Object]} uploads
- * @param {[String]} filters
- * @return {Object} uploads
  */
-exports.import = (uploads, filters, collection) => {
-  const _schema = new mongoose.Schema({}, { collection, strict: false });
-  let model;
-  try {
-    model = mongoose.model(collection);
-  } catch (error) {
-    model = mongoose.model(collection, _schema);
-  }
-  return model.bulkWrite(uploads.map((upload) => {
-    const filter = {};
-    filters.forEach((value) => {
-      filter[value] = upload[value];
-    });
-    return {
-      updateOne: {
-        filter,
-        update: upload,
-        upsert: true,
-      },
-    };
-  }));
-};
+function importUpload(uploads, filters, collection) {
+    const schema = new mongoose_1.default.Schema({}, { collection, strict: false });
+    let model;
+    try {
+        model = mongoose_1.default.model(collection);
+    }
+    catch (error) {
+        model = mongoose_1.default.model(collection, schema);
+    }
+    return model.bulkWrite(uploads.map((upload) => {
+        const filter = {};
+        filters.forEach((value) => {
+            filter[value] = upload[value];
+        });
+        return {
+            updateOne: {
+                filter,
+                update: upload,
+                upsert: true,
+            },
+        };
+    }));
+}
+exports.importUpload = importUpload;
+//# sourceMappingURL=uploads.repository.js.map

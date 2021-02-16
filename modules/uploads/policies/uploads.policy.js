@@ -1,22 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 /**
  * Module dependencies
 * */
-const path = require('path');
-
-const policy = require(path.resolve('./lib/middlewares/policy'));
-
+const policy = tslib_1.__importStar(require("../../../lib/middlewares/policy"));
 /**
  * Invoke Uploads Permissions
  */
-exports.invokeRolesPolicies = () => {
-  policy.Acl.allow([{
-    roles: ['user', 'admin'],
-    allows: [{
-      resources: '/api/uploads/:uploadName',
-      permissions: ['get', 'delete'],
-    }, {
-      resources: '/api/uploads/images/:imageName',
-      permissions: ['get'],
-    }],
-  }]);
-};
+function invokeRolesPolicies() {
+    policy.Acl.allow([{
+            roles: ['user', 'admin'],
+            allows: [{
+                    resources: '/api/uploads/:uploadName',
+                    permissions: ['get', 'delete'],
+                }, {
+                    resources: '/api/uploads/images/:imageName',
+                    permissions: ['get'],
+                }],
+        }]);
+}
+exports.default = invokeRolesPolicies;
+//# sourceMappingURL=uploads.policy.js.map

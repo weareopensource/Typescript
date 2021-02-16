@@ -1,79 +1,81 @@
-/**
- * Module dependencies
- */
-const path = require('path');
-
-const errors = require(path.resolve('./lib/helpers/errors'));
-const responses = require(path.resolve('./lib/helpers/responses'));
-const UserService = require('../services/user.service');
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userByPage = exports.userByID = exports.stats = exports.deleteUser = exports.update = exports.get = exports.list = void 0;
+const tslib_1 = require("tslib");
+const errors_1 = tslib_1.__importDefault(require("../../../lib/helpers/errors"));
+const responses_1 = require("../../../lib/helpers/responses");
+const UserService = tslib_1.__importStar(require("../services/user.service"));
 /**
  * @desc Endpoint to ask the service to get the list of users
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.list = async (req, res) => {
-  try {
-    const users = await UserService.list(req.search, req.page, req.perPage);
-    responses.success(res, 'user list')(users);
-  } catch (err) {
-    responses.error(res, 422, 'Unprocessable Entity', errors.getMessage(err))(err);
-  }
-};
-
+async function list(req, res) {
+    try {
+        const users = await UserService.list(req.search, req.page, req.perPage);
+        responses_1.success(res, 'user list')(users);
+    }
+    catch (err) {
+        responses_1.error(res, 422, 'Unprocessable Entity', errors_1.default(err))(err);
+    }
+}
+exports.list = list;
 /**
  * @desc Endpoint to get the current user in req
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.get = (req, res) => {
-  const user = req.model ? req.model.toJSON() : {};
-  responses.success(res, 'user get')(user);
-};
-
+function get(req, res) {
+    const user = req.model ? req.model.toJSON() : {};
+    responses_1.success(res, 'user get')(user);
+}
+exports.get = get;
 /**
  * @desc Endpoint to ask the service to update a user
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.update = async (req, res) => {
-  try {
-    const user = await UserService.update(req.model, req.body, 'admin');
-    responses.success(res, 'user updated')(user);
-  } catch (err) {
-    responses.error(res, 422, 'Unprocessable Entity', errors.getMessage(err))(err);
-  }
-};
-
+async function update(req, res) {
+    try {
+        const user = await UserService.update(req.model, req.body, 'admin');
+        responses_1.success(res, 'user updated')(user);
+    }
+    catch (err) {
+        responses_1.error(res, 422, 'Unprocessable Entity', errors_1.default(err))(err);
+    }
+}
+exports.update = update;
 /**
  * @desc Endpoint to ask the service to delete a user
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.delete = async (req, res) => {
-  try {
-    const result = await UserService.delete(req.model);
-    result.id = req.model.id;
-    responses.success(res, 'user deleted')(result);
-  } catch (err) {
-    responses.error(res, 422, 'Unprocessable Entity', errors.getMessage(err))(err);
-  }
-};
-
+async function deleteUser(req, res) {
+    try {
+        const result = await UserService.deleteUser(req.model);
+        result.id = req.model.id;
+        responses_1.success(res, 'user deleted')(result);
+    }
+    catch (err) {
+        responses_1.error(res, 422, 'Unprocessable Entity', errors_1.default(err))(err);
+    }
+}
+exports.deleteUser = deleteUser;
 /**
  * @desc Endpoint to get stats of users and return data
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-exports.stats = async (req, res) => {
-  const data = await UserService.stats();
-  if (!data.err) {
-    responses.success(res, 'users stats')(data);
-  } else {
-    responses.error(res, 422, 'Unprocessable Entity', errors.getMessage(data.err))(data.err);
-  }
-};
-
+async function stats(req, res) {
+    try {
+        const data = await UserService.stats();
+        responses_1.success(res, 'users stats')(data);
+    }
+    catch (err) {
+        responses_1.error(res, 422, 'Unprocessable Entity', errors_1.default(err))(err);
+    }
+}
+exports.stats = stats;
 /**
  * @desc MiddleWare to ask the service the user for this id
  * @param {Object} req - Express request object
@@ -81,19 +83,21 @@ exports.stats = async (req, res) => {
  * @param {Function} next - Express next middleware function
  * @param {String} id - user id
  */
-exports.userByID = async (req, res, next, id) => {
-  try {
-    const user = await UserService.getBrut({ id });
-    if (!user) responses.error(res, 404, 'Not Found', 'No User with that identifier has been found')();
-    else {
-      req.model = user;
-      next();
+async function userByID(req, res, next, id) {
+    try {
+        const user = await UserService.getBrut({ id });
+        if (!user)
+            responses_1.error(res, 404, 'Not Found', 'No User with that identifier has been found')();
+        else {
+            req.model = user;
+            next();
+        }
     }
-  } catch (err) {
-    next(err);
-  }
-};
-
+    catch (err) {
+        next(err);
+    }
+}
+exports.userByID = userByID;
 /**
  * @desc MiddleWare to check the params
  * @param {Object} req - Express request object
@@ -101,26 +105,33 @@ exports.userByID = async (req, res, next, id) => {
  * @param {Function} next - Express next middleware function  ...pagenumber&perpage&search
  * @param {String} params - params
  */
-exports.userByPage = async (req, res, next, params) => {
-  try {
-    if (!params) responses.error(res, 404, 'Not Found', 'No users with that params has been found')();
-    const request = params.split('&');
-    if (request.length > 3) responses.error(res, 422, 'Not Found', 'That search countain more than 3 params')();
-    else {
-      if (request.length === 3) {
-        req.page = Number(request[0]);
-        req.perPage = Number(request[1]);
-        req.search = String(request[2]);
-      } else if (request.length === 2) {
-        req.page = Number(request[0]);
-        req.perPage = Number(request[1]);
-      } else {
-        req.page = 0;
-        req.perPage = 0;
-      }
-      next();
+async function userByPage(req, res, next, params) {
+    try {
+        if (!params)
+            responses_1.error(res, 404, 'Not Found', 'No users with that params has been found')();
+        const request = params.split('&');
+        if (request.length > 3)
+            responses_1.error(res, 422, 'Not Found', 'That search countain more than 3 params')();
+        else {
+            if (request.length === 3) {
+                req.page = Number(request[0]);
+                req.perPage = Number(request[1]);
+                req.search = String(request[2]);
+            }
+            else if (request.length === 2) {
+                req.page = Number(request[0]);
+                req.perPage = Number(request[1]);
+            }
+            else {
+                req.page = 0;
+                req.perPage = 0;
+            }
+            next();
+        }
     }
-  } catch (err) {
-    next(err);
-  }
-};
+    catch (err) {
+        next(err);
+    }
+}
+exports.userByPage = userByPage;
+//# sourceMappingURL=admin.controller.js.map

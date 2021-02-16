@@ -69,3 +69,7 @@ mongod
 *.ntvs*
 *.njsproj
 *.sln
+
+# Typesript
+# =========
+dist/
