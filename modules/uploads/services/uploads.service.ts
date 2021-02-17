@@ -13,14 +13,8 @@ export async function get(uploadName): Promise<any> {
   return Promise.resolve(result);
 }
 
-/**
- * @desc Function to ask repository to get stream of chunks data
- * @param {Object} Upload
- * @return {Promise} result stream
- */
 export async function getStream(upload) {
-  const result = await UploadRepository.getStream(upload);
-  return Promise.resolve(result);
+  return UploadRepository.getStream(upload);
 }
 
 /**

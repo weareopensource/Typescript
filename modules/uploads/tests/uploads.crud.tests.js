@@ -4,7 +4,6 @@ const tslib_1 = require("tslib");
 /**
  * Module dependencies.
  */
-const path = tslib_1.__importStar(require("path"));
 const supertest_1 = tslib_1.__importDefault(require("supertest"));
 const express = tslib_1.__importStar(require("../../../lib/services/express"));
 const mongooseService = tslib_1.__importStar(require("../../../lib/services/mongoose"));
@@ -27,7 +26,7 @@ describe('Uploads CRUD Tests :', () => {
             await mongooseService.connect();
             await multerService.storage();
             await mongooseService.loadModels();
-            UserService = require(path.resolve('./modules/users/services/user.service'));
+            UserService = await Promise.resolve().then(() => tslib_1.__importStar(require('../../users/services/user.service')));
             // init application
             app = express.init();
             agent = supertest_1.default.agent(app);
@@ -226,7 +225,7 @@ describe('Uploads CRUD Tests :', () => {
             // }
             // del user
             try {
-                await UserService.delete(user);
+                await UserService.deleteUser(user);
             }
             catch (err) {
                 console.log(err);

@@ -13,11 +13,10 @@ const Attachment = createModel({ bucketName: 'uploads', model: 'Uploads' });
  * @param {Object} Filter
  * @return {Array} uploads
  */
-export function list(filter) {
+export async function list(filter) {
   return Uploads.find(filter)
     .select('filename uploadDate contentType')
-    .sort('-createdAt')
-    .exec();
+    .sort('-createdAt');
 }
 
 /**
@@ -25,9 +24,8 @@ export function list(filter) {
  * @param {String} uploadName
  * @return {Stream} upload
  */
-export function get(uploadName) {
-  return Uploads.findOne({ filename: uploadName })
-    .exec();
+export async function get(uploadName) {
+  return Uploads.findOne({ filename: uploadName });
 }
 
 /**
@@ -45,9 +43,8 @@ export function getStream(upload) {
  * @param {Object} upload
  * @return {Object} upload updated
  */
-export function update(id, upload) {
-  return Uploads.findOneAndUpdate({ _id: id }, upload, { new: true })
-    .exec();
+export async function update(id, upload) {
+  return Uploads.findOneAndUpdate({ _id: id }, upload, { new: true });
 }
 
 /**
@@ -56,7 +53,7 @@ export function update(id, upload) {
  * @return {Object} confirmation of delete
  */
 export async function deleteUpload(upload) {
-  if (!upload._id) upload = await Uploads.findOne({ filename: upload.filename }).exec();
+  if (!upload._id) upload = await Uploads.findOne({ filename: upload.filename });
   if (upload) {
     Attachment.unlink(upload._id, (err, unlinked) => {
       if (err) throw new AppError('Upload: delete error', { code: 'REPOSITORY_ERROR', details: err });

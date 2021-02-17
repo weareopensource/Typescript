@@ -10,7 +10,7 @@ export interface NodeRequest extends Request {
   model?: any;
   login: any;
   multerErr?: any;
-  file?: any;
+  file: any;
   upload?: any;
   sharpSize?: any;
   sharpOption?: any;

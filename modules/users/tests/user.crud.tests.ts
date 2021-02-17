@@ -11,7 +11,8 @@ import * as express from '../../../lib/services/express';
  * Unit tests
  */
 describe('User CRUD Tests :', () => {
-  let UserService;
+  let UserService: any;
+
   let app;
   let agent;
   let credentials;
@@ -27,7 +28,7 @@ describe('User CRUD Tests :', () => {
       await mongooseService.connect();
       await multerService.storage();
       await mongooseService.loadModels();
-      UserService = await import('../services/user.service');
+      UserService = await import('../../users/services/user.service');
       // init application
       app = express.init();
       agent = request.agent(app);
@@ -135,7 +136,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -176,7 +177,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -244,7 +245,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -300,7 +301,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -332,7 +333,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -365,7 +366,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -412,7 +413,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -445,7 +446,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -495,7 +496,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -529,7 +530,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -847,7 +848,7 @@ describe('User CRUD Tests :', () => {
       }
 
       try {
-        await UserService.delete(userEdited);
+        await UserService.deleteUser(userEdited);
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -1019,7 +1020,7 @@ describe('User CRUD Tests :', () => {
     afterEach(async () => {
       // del user
       try {
-        await UserService.delete(user);
+        await UserService.deleteUser(user);
       } catch (err) {
         console.log(err);
       }

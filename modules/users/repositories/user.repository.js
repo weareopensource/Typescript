@@ -41,16 +41,16 @@ exports.create = create;
  */
 async function get(user) {
     if (user.id && mongoose_1.default.Types.ObjectId.isValid(user.id))
-        return user_model_mongoose_1.default.findOne({ _id: user.id }).exec();
+        return user_model_mongoose_1.default.findOne({ _id: user.id });
     if (user.email)
-        return user_model_mongoose_1.default.findOne({ email: user.email }).exec();
+        return user_model_mongoose_1.default.findOne({ email: user.email });
     if (user.resetPasswordToken) {
         return user_model_mongoose_1.default.findOne({
             resetPasswordToken: user.resetPasswordToken,
             resetPasswordExpires: {
                 $gt: Date.now(),
             },
-        }).exec();
+        });
     }
 }
 exports.get = get;
@@ -60,8 +60,7 @@ exports.get = get;
  * @return {Array} users
  */
 async function search(input) {
-    return user_model_mongoose_1.default.find(input)
-        .exec();
+    return user_model_mongoose_1.default.find(input);
 }
 exports.search = search;
 /**
@@ -73,11 +72,6 @@ async function update(user) {
     return new user_model_mongoose_1.default(user).save();
 }
 exports.update = update;
-/**
- * @desc Function to delete a user from db by id or email
- * @param {Object} user
- * @return {Object} confirmation of delete
- */
 async function deleteUser(user) {
     if (user.id && mongoose_1.default.Types.ObjectId.isValid(user.id))
         return user_model_mongoose_1.default.deleteOne({ _id: user.id }).exec();

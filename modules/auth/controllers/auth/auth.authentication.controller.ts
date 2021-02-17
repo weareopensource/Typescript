@@ -5,6 +5,7 @@ import { Response } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
+
 import AppError from '../../../../lib/helpers/AppError';
 import getMessage from '../../../../lib/helpers/errors';
 import { NodeRequest, error } from '../../../../lib/helpers/responses';

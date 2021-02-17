@@ -28,7 +28,7 @@ describe('User CRUD Tests :', () => {
             await mongooseService.connect();
             await multerService.storage();
             await mongooseService.loadModels();
-            UserService = await Promise.resolve().then(() => tslib_1.__importStar(require('../services/user.service')));
+            UserService = await Promise.resolve().then(() => tslib_1.__importStar(require('../../users/services/user.service')));
             // init application
             app = express.init();
             agent = supertest_1.default.agent(app);
@@ -128,7 +128,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -165,7 +165,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -232,7 +232,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -287,7 +287,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -318,7 +318,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -350,7 +350,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -393,7 +393,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -425,7 +425,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -473,7 +473,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -506,7 +506,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -816,7 +816,7 @@ describe('User CRUD Tests :', () => {
                 expect(err).toBeFalsy();
             }
             try {
-                await UserService.delete(userEdited);
+                await UserService.deleteUser(userEdited);
             }
             catch (err) {
                 console.log(err);
@@ -976,7 +976,7 @@ describe('User CRUD Tests :', () => {
         afterEach(async () => {
             // del user
             try {
-                await UserService.delete(user);
+                await UserService.deleteUser(user);
             }
             catch (err) {
                 console.log(err);

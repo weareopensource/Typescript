@@ -4,6 +4,7 @@
 import { hash } from 'bcrypt';
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
+
 import getMessage from '../../../../lib/helpers/errors';
 import sendMail from '../../../../lib/helpers/mails';
 import { error, NodeRequest, success } from '../../../../lib/helpers/responses';

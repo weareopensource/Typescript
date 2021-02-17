@@ -19,7 +19,7 @@ exports.default = (app) => {
     app.route('/api/users/terms')
         .get(passport_1.default.authenticate('jwt'), policy.isAllowed, users_controller_1.default.terms);
     app.route('/api/users').all(passport_1.default.authenticate('jwt'), policy.isAllowed)
-        .put(model.isValid(user_schema_1.default.User), users_controller_1.default.update)
+        .put(model.isValid(user_schema_1.default), users_controller_1.default.update)
         .delete(users_controller_1.default.deleteUser);
     app.route('/api/users/password')
         .post(passport_1.default.authenticate('jwt'), policy.isAllowed, auth_password_controller_1.updatePassword);

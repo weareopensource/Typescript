@@ -15,21 +15,22 @@ import logger from '../../../lib/services/logger';
  * Unit tests
  */
 describe('Configuration Tests:', () => {
-  let AuthService;
-  let UserService;
-  let TaskService;
+  // let AuthService;
+  let UserService: any;
+  let TaskService: any;
 
-  beforeAll(() => mongooseService.connect()
-    .then(async () => {
+  beforeAll(async () => {
+    try {
+      await mongooseService.connect();
       await multerService.storage();
       await mongooseService.loadModels();
-      AuthService = await import('../../auth/services/auth.service');
       UserService = await import('../../users/services/user.service');
       TaskService = await import('../../tasks/services/tasks.service');
-    })
-    .catch((e) => {
+      // AuthService = await import('../../auth/services/auth.service');
+    } catch (e) {
       console.log(e);
-    }));
+    }
+  });
 
   let user1;
   let admin1;
@@ -42,8 +43,8 @@ describe('Configuration Tests:', () => {
   describe('Configurations', () => {
     test('should load production configuration in production env', async () => {
       try {
-        const defaultConfig = require(path.join(process.cwd(), './config', 'defaults', 'production')) || {};
-        expect(defaultConfig.app.title.split(' - ')[1]).toBe('Production Environment');
+        const defaultConfig = await import('../../../config');
+        expect(defaultConfig.default.app.title.split(' - ')[1]).toBe('Test Environment');
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -109,7 +110,7 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[0]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -133,8 +134,8 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
-        await UserService.delete({ id: result[1]._id });
+        await UserService.deleteUser({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[1]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -158,10 +159,10 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
-        await UserService.delete({ id: result[1]._id });
-        await TaskService.delete({ id: result[2]._id });
-        await TaskService.delete({ id: result[3]._id });
+        await UserService.deleteUser({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[1]._id });
+        await TaskService.deleteTask({ id: result[2]._id });
+        await TaskService.deleteTask({ id: result[3]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -206,8 +207,8 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
-        await UserService.delete({ id: result[1]._id });
+        await UserService.deleteUser({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[1]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -232,7 +233,7 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[0]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -258,8 +259,8 @@ describe('Configuration Tests:', () => {
       }
 
       try {
-        await UserService.delete({ id: result[0]._id });
-        await UserService.delete({ id: result[1]._id });
+        await UserService.deleteUser({ id: result[0]._id });
+        await UserService.deleteUser({ id: result[1]._id });
       } catch (err) {
         console.log(err);
         expect(err).toBeFalsy();
@@ -325,8 +326,8 @@ describe('Configuration Tests:', () => {
       expect(options.stream).toBeDefined();
     });
 
-    test('should use the default log format of "combined" when an invalid format was provided', () => {
-      const _logger = require(path.resolve('./lib/services/logger'));
+    test('should use the default log format of "combined" when an invalid format was provided', async () => {
+      const _logger = await import('../../../lib/services/logger');
 
       // manually set the config log format to be invalid
       config.log = {
@@ -337,7 +338,7 @@ describe('Configuration Tests:', () => {
         format: '_some_invalid_format_',
       };
 
-      const format = _logger.getLogFormat();
+      const format = _logger.default.getLogFormat();
       expect(format).toBe('combined');
     });
 

@@ -15,11 +15,10 @@ const Attachment = mongoose_gridfs_1.createModel({ bucketName: 'uploads', model:
  * @param {Object} Filter
  * @return {Array} uploads
  */
-function list(filter) {
+async function list(filter) {
     return uploads_model_mongoose_1.default.find(filter)
         .select('filename uploadDate contentType')
-        .sort('-createdAt')
-        .exec();
+        .sort('-createdAt');
 }
 exports.list = list;
 /**
@@ -27,9 +26,8 @@ exports.list = list;
  * @param {String} uploadName
  * @return {Stream} upload
  */
-function get(uploadName) {
-    return uploads_model_mongoose_1.default.findOne({ filename: uploadName })
-        .exec();
+async function get(uploadName) {
+    return uploads_model_mongoose_1.default.findOne({ filename: uploadName });
 }
 exports.get = get;
 /**
@@ -47,9 +45,8 @@ exports.getStream = getStream;
  * @param {Object} upload
  * @return {Object} upload updated
  */
-function update(id, upload) {
-    return uploads_model_mongoose_1.default.findOneAndUpdate({ _id: id }, upload, { new: true })
-        .exec();
+async function update(id, upload) {
+    return uploads_model_mongoose_1.default.findOneAndUpdate({ _id: id }, upload, { new: true });
 }
 exports.update = update;
 /**
@@ -59,7 +56,7 @@ exports.update = update;
  */
 async function deleteUpload(upload) {
     if (!upload._id)
-        upload = await uploads_model_mongoose_1.default.findOne({ filename: upload.filename }).exec();
+        upload = await uploads_model_mongoose_1.default.findOne({ filename: upload.filename });
     if (upload) {
         Attachment.unlink(upload._id, (err, unlinked) => {
             if (err)

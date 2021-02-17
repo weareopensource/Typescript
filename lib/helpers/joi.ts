@@ -4,8 +4,6 @@
 import zxcvbn from 'zxcvbn';
 import config from '../../config';
 
-export default joiZxcvbn;
-
 /**
  * @desc Joi extension for  zxcvbn
  */
@@ -49,3 +47,5 @@ function joiZxcvbn(joi) {
     },
   };
 }
+
+export default joiZxcvbn;

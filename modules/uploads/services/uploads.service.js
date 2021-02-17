@@ -17,14 +17,8 @@ async function get(uploadName) {
     return Promise.resolve(result);
 }
 exports.get = get;
-/**
- * @desc Function to ask repository to get stream of chunks data
- * @param {Object} Upload
- * @return {Promise} result stream
- */
 async function getStream(upload) {
-    const result = await UploadRepository.getStream(upload);
-    return Promise.resolve(result);
+    return UploadRepository.getStream(upload);
 }
 exports.getStream = getStream;
 /**

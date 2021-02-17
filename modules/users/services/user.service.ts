@@ -4,13 +4,9 @@
 import { hash } from 'bcrypt';
 import _ from 'lodash';
 import config from '../../../config';
+import { IUser } from '../models/user.model.mongoose';
 import * as UserRepository from '../repositories/user.repository';
 
-/**
- * @desc Local function to removeSensitive data from user
- * @param {Object} user
- * @return {Object} user
- */
 export function removeSensitive(user: any, conf?: any) {
   if (!user || typeof user !== 'object') return null;
   const keys = conf || config.whitelists.users.default;
@@ -69,7 +65,7 @@ export async function search(input) {
  */
 export async function get(user) {
   const result = await UserRepository.get(user);
-  return Promise.resolve(removeSensitive(result));
+  return removeSensitive(result);
 }
 
 /**
@@ -101,23 +97,14 @@ export async function update(user, body, option?: 'admin' | 'recover') {
 export async function terms(user) {
   user = _.assignIn(user, { terms: new Date() });
   const result = await UserRepository.update(user);
-  return Promise.resolve(removeSensitive(result));
+  return removeSensitive(result);
 }
 
-/**
- * @desc Function to ask repository to a user from db by id or email
- * @param {Object} user
- * @return {Promise} result & id
- */
-export async function deleteUser(user) {
+export async function deleteUser(user: IUser) {
   const result = await UserRepository.deleteUser(user);
   return Promise.resolve(result);
 }
 
-/**
- * @desc Function to get all stats of db
- * @return {Promise} All stats
- */
 export async function stats() {
   const result = await UserRepository.stats();
   return Promise.resolve(result);

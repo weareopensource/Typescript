@@ -2,7 +2,7 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import User from '../models/user.model.mongoose';
+import User, { IUser } from '../models/user.model.mongoose';
 /**
  * @desc Function to get all user in db
  */
@@ -36,15 +36,15 @@ export async function create(user) {
  * @return {Object} user
  */
 export async function get(user) {
-  if (user.id && mongoose.Types.ObjectId.isValid(user.id)) return User.findOne({ _id: user.id }).exec();
-  if (user.email) return User.findOne({ email: user.email }).exec();
+  if (user.id && mongoose.Types.ObjectId.isValid(user.id)) return User.findOne({ _id: user.id });
+  if (user.email) return User.findOne({ email: user.email });
   if (user.resetPasswordToken) {
     return User.findOne({
       resetPasswordToken: user.resetPasswordToken,
       resetPasswordExpires: {
         $gt: Date.now(),
       },
-    }).exec();
+    });
   }
 }
 
@@ -54,8 +54,7 @@ export async function get(user) {
  * @return {Array} users
  */
 export async function search(input) {
-  return User.find(input)
-    .exec();
+  return User.find(input);
 }
 
 /**
@@ -67,12 +66,7 @@ export async function update(user) {
   return new User(user).save();
 }
 
-/**
- * @desc Function to delete a user from db by id or email
- * @param {Object} user
- * @return {Object} confirmation of delete
- */
-export async function deleteUser(user) {
+export async function deleteUser(user: IUser) {
   if (user.id && mongoose.Types.ObjectId.isValid(user.id)) return User.deleteOne({ _id: user.id }).exec();
   if (user.email) return User.deleteOne({ email: user.email }).exec();
 }

@@ -9,7 +9,7 @@ import multer from 'multer';
 import { createBucket } from 'mongoose-gridfs';
 import AppError from '../helpers/AppError';
 
-export let storageInfo;
+let storage;
 
 /**
  * @desc File filter
@@ -24,12 +24,12 @@ const fileFilter = (formats) => (req: Request, file, callback) => {
 /**
  * set Strorage
  */
-export function storage() {
-  storageInfo = createBucket({
+module.exports.storage = () => {
+  storage = createBucket({
     bucketName: 'uploads',
     model: 'Uploads',
   });
-}
+};
 
 /**
  * @desc file upload middleware

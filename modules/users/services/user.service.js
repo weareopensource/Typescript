@@ -9,11 +9,6 @@ const bcrypt_1 = require("bcrypt");
 const lodash_1 = tslib_1.__importDefault(require("lodash"));
 const config_1 = tslib_1.__importDefault(require("../../../config"));
 const UserRepository = tslib_1.__importStar(require("../repositories/user.repository"));
-/**
- * @desc Local function to removeSensitive data from user
- * @param {Object} user
- * @return {Object} user
- */
 function removeSensitive(user, conf) {
     if (!user || typeof user !== 'object')
         return null;
@@ -74,7 +69,7 @@ exports.search = search;
  */
 async function get(user) {
     const result = await UserRepository.get(user);
-    return Promise.resolve(removeSensitive(result));
+    return removeSensitive(result);
 }
 exports.get = get;
 /**
@@ -108,23 +103,14 @@ exports.update = update;
 async function terms(user) {
     user = lodash_1.default.assignIn(user, { terms: new Date() });
     const result = await UserRepository.update(user);
-    return Promise.resolve(removeSensitive(result));
+    return removeSensitive(result);
 }
 exports.terms = terms;
-/**
- * @desc Function to ask repository to a user from db by id or email
- * @param {Object} user
- * @return {Promise} result & id
- */
 async function deleteUser(user) {
     const result = await UserRepository.deleteUser(user);
     return Promise.resolve(result);
 }
 exports.deleteUser = deleteUser;
-/**
- * @desc Function to get all stats of db
- * @return {Promise} All stats
- */
 async function stats() {
     const result = await UserRepository.stats();
     return Promise.resolve(result);
