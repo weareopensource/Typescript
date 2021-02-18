@@ -14,7 +14,7 @@ import config from '../../config';
 export async function loadModels() {
   // Globbing model files
   await Promise.all(config.files.mongooseModels.map(async (modelPath: string) => {
-    import(path.resolve(modelPath));
+    await import(path.resolve(modelPath));
   }));
 }
 

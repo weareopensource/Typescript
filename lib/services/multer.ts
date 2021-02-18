@@ -9,7 +9,7 @@ import multer from 'multer';
 import { createBucket } from 'mongoose-gridfs';
 import AppError from '../helpers/AppError';
 
-let storage;
+export let storage;
 
 /**
  * @desc File filter

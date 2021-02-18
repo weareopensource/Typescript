@@ -7,12 +7,12 @@ const tslib_1 = require("tslib");
  */
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
+const config_1 = tslib_1.__importDefault(require("../../../../config"));
 const errors_1 = tslib_1.__importDefault(require("../../../../lib/helpers/errors"));
 const mails_1 = tslib_1.__importDefault(require("../../../../lib/helpers/mails"));
 const responses_1 = require("../../../../lib/helpers/responses");
-const config_1 = tslib_1.__importDefault(require("../../../../config"));
-const AuthService = tslib_1.__importStar(require("../../services/auth.service"));
 const UserService = tslib_1.__importStar(require("../../../users/services/user.service"));
+const AuthService = tslib_1.__importStar(require("../../services/auth.service"));
 /**
  * @desc Endpoint to init password reset mail
  */
@@ -39,9 +39,16 @@ async function forgot(req, res) {
     }
     // send mail
     const mail = await mails_1.default({
+        html: 'reset-password-confirm-email',
         from: config_1.default.mailer.from,
         to: user.email,
         subject: 'Password Reset',
+        params: {
+            displayName: `${user.firstName} ${user.lastName}`,
+            url: `${config_1.default.cors.origin[0]}/reset?token=${user.resetPasswordToken}`,
+            appName: config_1.default.app.title,
+            appContact: config_1.default.app.contact,
+        },
     });
     if (!mail.accepted)
         return responses_1.error(res, 400, 'Bad Request', 'Failure sending email')();
@@ -96,6 +103,11 @@ async function reset(req, res) {
         from: config_1.default.mailer.from,
         to: user.email,
         subject: 'Your password has been changed',
+        params: {
+            displayName: `${user.firstName} ${user.lastName}`,
+            appName: config_1.default.app.title,
+            appContact: config_1.default.app.contact,
+        },
     });
     if (!mail.accepted)
         return responses_1.error(res, 400, 'Bad Request', 'Failure sending email')();

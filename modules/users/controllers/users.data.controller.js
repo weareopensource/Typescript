@@ -53,16 +53,23 @@ exports.get = get;
  */
 async function getMail(req, res) {
     try {
-        // const result = {
-        //   user: await UserService.get(req.user),
-        //   tasks: await TaskDataService.list(req.user),
-        //   uploads: await UploadDataService.list(req.user),
-        // };
+        const result = {
+            user: await UserService.get(req.user),
+            tasks: await TaskDataService.list(req.user),
+            uploads: await UploadDataService.list(req.user),
+        };
         // send mail
         const mail = await mails_1.default({
+            html: 'data-privacy-email',
             from: config_1.default.mailer.from,
             to: req.user.email,
             subject: `${config_1.default.app.title}: your data`,
+            params: {
+                result: JSON.stringify(result),
+                displayName: `${req.user.firstName} ${req.user.lastName}`,
+                appName: config_1.default.app.title,
+                appContact: config_1.default.app.contact,
+            },
         });
         if (!mail.accepted)
             return responses_1.error(res, 400, 'Bad Request', 'Failure sending email')();

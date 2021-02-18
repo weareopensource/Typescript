@@ -520,6 +520,7 @@ describe('User CRUD Tests :', () => {
                     email: user.email,
                 })
                     .expect(400);
+                console.log(result);
                 expect(result.body.message).toBe('Bad Request');
                 expect(result.body.description).toBe('Failure sending email');
             }

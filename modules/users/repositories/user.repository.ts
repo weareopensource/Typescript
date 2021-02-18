@@ -36,15 +36,15 @@ export async function create(user) {
  * @return {Object} user
  */
 export async function get(user) {
-  if (user.id && mongoose.Types.ObjectId.isValid(user.id)) return User.findOne({ _id: user.id });
-  if (user.email) return User.findOne({ email: user.email });
+  if (user.id && mongoose.Types.ObjectId.isValid(user.id)) return User.findOne({ _id: user.id }).exec();
+  if (user.email) return User.findOne({ email: user.email }).exec();
   if (user.resetPasswordToken) {
     return User.findOne({
       resetPasswordToken: user.resetPasswordToken,
       resetPasswordExpires: {
         $gt: Date.now(),
       },
-    });
+    }).exec();
   }
 }
 
@@ -54,7 +54,7 @@ export async function get(user) {
  * @return {Array} users
  */
 export async function search(input) {
-  return User.find(input);
+  return User.find(input).exec();
 }
 
 /**
@@ -76,7 +76,7 @@ export async function deleteUser(user: IUser) {
  * @return {Object} scrap
  */
 export async function stats() {
-  return User.countDocuments();
+  return User.countDocuments().exec();
 }
 
 /**

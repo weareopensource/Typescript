@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.me = exports.deleteUser = exports.terms = exports.update = void 0;
+exports.userInfo = exports.deleteUser = exports.terms = exports.update = void 0;
 const tslib_1 = require("tslib");
 const errors_1 = tslib_1.__importDefault(require("../../../../lib/helpers/errors"));
 const UserService = tslib_1.__importStar(require("../../services/user.service"));
@@ -61,10 +61,12 @@ exports.deleteUser = deleteUser;
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-function me(req, res) {
+async function userInfo(req, res) {
+    console.log(test);
     // Sanitize the user - short term solution. Copied from core.controller.js
     // TODO create proper passport mock: See https://gist.github.com/mweibel/5219403
-    let user;
+    let user = {};
+    console.log(req.user.id);
     if (req.user) {
         user = {
             id: req.user.id,
@@ -83,10 +85,10 @@ function me(req, res) {
         if (req.user.position)
             user.position = req.user.position;
         // startup requirement
-        if (terms)
-            user.terms = terms;
+        if (req.user.terms)
+            user.terms = req.user.terms;
     }
-    return responses_1.success(res, 'user get')(user);
+    responses_1.success(res, 'user get')(user);
 }
-exports.me = me;
+exports.userInfo = userInfo;
 //# sourceMappingURL=users.profile.controller.js.map

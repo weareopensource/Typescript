@@ -41,16 +41,16 @@ exports.create = create;
  */
 async function get(user) {
     if (user.id && mongoose_1.default.Types.ObjectId.isValid(user.id))
-        return user_model_mongoose_1.default.findOne({ _id: user.id });
+        return user_model_mongoose_1.default.findOne({ _id: user.id }).exec();
     if (user.email)
-        return user_model_mongoose_1.default.findOne({ email: user.email });
+        return user_model_mongoose_1.default.findOne({ email: user.email }).exec();
     if (user.resetPasswordToken) {
         return user_model_mongoose_1.default.findOne({
             resetPasswordToken: user.resetPasswordToken,
             resetPasswordExpires: {
                 $gt: Date.now(),
             },
-        });
+        }).exec();
     }
 }
 exports.get = get;
@@ -60,7 +60,7 @@ exports.get = get;
  * @return {Array} users
  */
 async function search(input) {
-    return user_model_mongoose_1.default.find(input);
+    return user_model_mongoose_1.default.find(input).exec();
 }
 exports.search = search;
 /**
@@ -84,7 +84,7 @@ exports.deleteUser = deleteUser;
  * @return {Object} scrap
  */
 async function stats() {
-    return user_model_mongoose_1.default.countDocuments();
+    return user_model_mongoose_1.default.countDocuments().exec();
 }
 exports.stats = stats;
 /**

@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 import _ from 'lodash';
-import path from 'path';
 import getMessage from '../../../lib/helpers/errors';
 // const mock = require('mock-fs');
 import * as multerService from '../../../lib/services/multer';

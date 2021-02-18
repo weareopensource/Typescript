@@ -107,7 +107,6 @@ export async function start() {
   try {
     ({ db, orm, app } = await bootstrap());
   } catch (e) {
-    console.log(e)
     throw new Error(e);
   }
 

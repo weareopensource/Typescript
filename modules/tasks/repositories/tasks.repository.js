@@ -81,7 +81,7 @@ exports.deleteMany = deleteMany;
  * @return {Object} scrap
  */
 async function stats() {
-    return tasks_model_mongoose_1.default.countDocuments();
+    return tasks_model_mongoose_1.default.countDocuments().exec();
 }
 exports.stats = stats;
 /**
