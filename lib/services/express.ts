@@ -107,13 +107,9 @@ export function initModulesClientRoutes(app: Application) {
  * Configure the modules ACL policies
  */
 export function initModulesServerPolicies() {
-  try {
-    config.files.policies.forEach(async (policyPath) => {
-      require(path.resolve(policyPath)).default();
-    });
-  } catch (e) {
-    console.log(e.stack);
-  }
+  config.files.policies.forEach((policyPath) => {
+    require(path.resolve(policyPath));
+  });
 }
 
 /**

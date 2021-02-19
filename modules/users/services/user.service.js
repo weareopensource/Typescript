@@ -49,7 +49,7 @@ async function create(user) {
     }
     const result = await UserRepository.create(user);
     // Remove sensitive data before return
-    return Promise.resolve(removeSensitive(result));
+    return removeSensitive(result);
 }
 exports.create = create;
 /**
@@ -92,7 +92,7 @@ async function update(user, body, option) {
     else if (option === 'recover')
         user = lodash_1.default.assignIn(user, removeSensitive(body, config_1.default.whitelists.users.recover));
     const result = await UserRepository.update(user);
-    return Promise.resolve(removeSensitive(result));
+    return removeSensitive(result);
 }
 exports.update = update;
 /**
@@ -107,13 +107,11 @@ async function terms(user) {
 }
 exports.terms = terms;
 async function deleteUser(user) {
-    const result = await UserRepository.deleteUser(user);
-    return Promise.resolve(result);
+    return UserRepository.deleteUser(user);
 }
 exports.deleteUser = deleteUser;
 async function stats() {
-    const result = await UserRepository.stats();
-    return Promise.resolve(result);
+    return UserRepository.stats();
 }
 exports.stats = stats;
 //# sourceMappingURL=user.service.js.map

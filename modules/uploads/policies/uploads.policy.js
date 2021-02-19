@@ -8,7 +8,7 @@ const policy = tslib_1.__importStar(require("../../../lib/middlewares/policy"));
 /**
  * Invoke Uploads Permissions
  */
-function invokeRolesPolicies() {
+const invokeRolesPolicies = () => {
     policy.Acl.allow([{
             roles: ['user', 'admin'],
             allows: [{
@@ -19,6 +19,9 @@ function invokeRolesPolicies() {
                     permissions: ['get'],
                 }],
         }]);
-}
-exports.default = invokeRolesPolicies;
+};
+/**
+ * Invoke Uploads Permissions
+ */
+exports.default = invokeRolesPolicies();
 //# sourceMappingURL=uploads.policy.js.map

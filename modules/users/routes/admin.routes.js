@@ -8,6 +8,7 @@ const passport_1 = tslib_1.__importDefault(require("passport"));
 const admin = tslib_1.__importStar(require("../controllers/admin.controller"));
 const policy = tslib_1.__importStar(require("../../../lib/middlewares/policy"));
 exports.default = (app) => {
+    require('./users.routes.js').default(app);
     // stats
     app.route('/api/users/stats').all(policy.isAllowed)
         .get(admin.stats);
@@ -19,7 +20,7 @@ exports.default = (app) => {
         .get(passport_1.default.authenticate('jwt'), policy.isAllowed, admin.list); // list
     // Single user routes
     app.route('/api/users/:userId')
-        .get(admin.get) // get
+        .get(admin.getUser) // get
         .put(passport_1.default.authenticate('jwt'), policy.isAllowed, admin.update) // update
         .delete(passport_1.default.authenticate('jwt'), policy.isAllowed, admin.deleteUser); // delete
     // Finish by binding the user middleware

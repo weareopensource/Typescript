@@ -34,7 +34,7 @@ export async function deleteUser(req: NodeRequest, res: Response) {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-export async function get(req: NodeRequest, res: Response) {
+export async function getAnyUser(req: NodeRequest, res: Response) {
   try {
     const result = {
       user: await UserService.get(req.user),

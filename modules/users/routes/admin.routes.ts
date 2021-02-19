@@ -6,6 +6,8 @@ import * as admin from '../controllers/admin.controller';
 import * as policy from '../../../lib/middlewares/policy';
 
 export default (app) => {
+  require('./users.routes.js').default(app);
+
   // stats
   app.route('/api/users/stats').all(policy.isAllowed)
     .get(admin.stats);
@@ -20,7 +22,7 @@ export default (app) => {
 
   // Single user routes
   app.route('/api/users/:userId')
-    .get(admin.get) // get
+    .get(admin.getUser) // get
     .put(passport.authenticate('jwt'), policy.isAllowed, admin.update) // update
     .delete(passport.authenticate('jwt'), policy.isAllowed, admin.deleteUser); // delete
 

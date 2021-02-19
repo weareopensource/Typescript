@@ -10,25 +10,27 @@ const multer = tslib_1.__importStar(require("../../../lib/services/multer"));
 const model = tslib_1.__importStar(require("../../../lib/middlewares/model"));
 const policy = tslib_1.__importStar(require("../../../lib/middlewares/policy"));
 const auth_password_controller_1 = require("../../auth/controllers/auth/auth.password.controller");
+const users_images_controller_1 = require("../controllers/users/users.images.controller");
+const users_profile_controller_1 = require("../controllers/users/users.profile.controller");
 const user_schema_1 = tslib_1.__importDefault(require("../models/user.schema"));
-const users_controller_1 = tslib_1.__importDefault(require("../controllers/users.controller"));
+const usersData = tslib_1.__importStar(require("../controllers/users.data.controller"));
 exports.default = (app) => {
     app.route('/api/users/me')
-        .get(passport_1.default.authenticate('jwt'), policy.isAllowed, users_controller_1.default.userInfo);
+        .get(passport_1.default.authenticate('jwt'), policy.isAllowed, users_profile_controller_1.getMe);
     app.route('/api/users/terms')
-        .get(passport_1.default.authenticate('jwt'), policy.isAllowed, users_controller_1.default.terms);
+        .get(passport_1.default.authenticate('jwt'), policy.isAllowed, users_profile_controller_1.terms);
     app.route('/api/users').all(passport_1.default.authenticate('jwt'), policy.isAllowed)
-        .put(model.isValid(user_schema_1.default), users_controller_1.default.update)
-        .delete(users_controller_1.default.deleteProfileUser);
+        .put(model.isValid(user_schema_1.default), users_profile_controller_1.update)
+        .delete(users_profile_controller_1.deleteUser);
     app.route('/api/users/password')
         .post(passport_1.default.authenticate('jwt'), policy.isAllowed, auth_password_controller_1.updatePassword);
     app.route('/api/users/avatar').all(passport_1.default.authenticate('jwt'), policy.isAllowed)
-        .post(multer.create('img', config_1.default.uploads.avatar), users_controller_1.default.updateAvatar)
-        .delete(users_controller_1.default.deleteAvatar);
+        .post(multer.create('img', config_1.default.uploads.avatar), users_images_controller_1.updateAvatar)
+        .delete(users_images_controller_1.deleteAvatar);
     app.route('/api/users/data').all(passport_1.default.authenticate('jwt'), policy.isAllowed)
-        .get(users_controller_1.default.get)
-        .delete(users_controller_1.default.deleteDataUser);
+        .get(usersData.getAnyUser)
+        .delete(usersData.deleteUser);
     app.route('/api/users/data/mail').all(passport_1.default.authenticate('jwt'), policy.isAllowed)
-        .get(users_controller_1.default.getMail);
+        .get(usersData.getMail);
 };
 //# sourceMappingURL=users.routes.js.map

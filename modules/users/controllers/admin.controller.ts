@@ -25,7 +25,7 @@ export async function list(req: NodeRequest, res: Response) {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-export function get(req: NodeRequest, res: Response) {
+export function getUser(req: NodeRequest, res: Response) {
   const user = req.model ? req.model.toJSON() : {};
   success(res, 'user get')(user);
 }

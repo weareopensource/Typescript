@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMail = exports.get = exports.deleteUser = void 0;
+exports.getMail = exports.getAnyUser = exports.deleteUser = void 0;
 const tslib_1 = require("tslib");
 const config_1 = tslib_1.__importDefault(require("../../../config"));
 const errors_1 = tslib_1.__importDefault(require("../../../lib/helpers/errors"));
@@ -34,7 +34,7 @@ exports.deleteUser = deleteUser;
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-async function get(req, res) {
+async function getAnyUser(req, res) {
     try {
         const result = {
             user: await UserService.get(req.user),
@@ -47,7 +47,7 @@ async function get(req, res) {
         responses_1.error(res, 422, 'Unprocessable Entity', errors_1.default(err))(err);
     }
 }
-exports.get = get;
+exports.getAnyUser = getAnyUser;
 /**
  * @desc Endpoint to ask the service to get all user data and send it to user mail
  */

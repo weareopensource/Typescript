@@ -6,7 +6,7 @@ import * as policy from '../../../lib/middlewares/policy';
 /**
  * Invoke Tasks Permissions
  */
-export default function invokeRolesPolicies() {
+const invokeRolesPolicies = () => {
   policy.Acl.allow([{
     roles: ['user'],
     allows: [{
@@ -29,4 +29,6 @@ export default function invokeRolesPolicies() {
       permissions: ['get'],
     }],
   }]);
-}
+};
+
+export default invokeRolesPolicies();

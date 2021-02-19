@@ -11,11 +11,12 @@ import config from '../../config';
 /**
  * Load all mongoose related models
  */
-export async function loadModels() {
+export async function loadModels(callback?: () => void) {
   // Globbing model files
   await Promise.all(config.files.mongooseModels.map(async (modelPath: string) => {
     await import(path.resolve(modelPath));
   }));
+  if (callback) callback();
 }
 
 /**

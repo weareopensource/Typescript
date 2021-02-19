@@ -8,7 +8,7 @@ const policy = tslib_1.__importStar(require("../../../lib/middlewares/policy"));
 /**
  * Invoke Tasks Permissions
  */
-function invokeRolesPolicies() {
+const invokeRolesPolicies = () => {
     policy.Acl.allow([{
             roles: ['user'],
             allows: [{
@@ -31,6 +31,6 @@ function invokeRolesPolicies() {
                     permissions: ['get'],
                 }],
         }]);
-}
-exports.default = invokeRolesPolicies;
+};
+exports.default = invokeRolesPolicies();
 //# sourceMappingURL=tasks.policy.js.map

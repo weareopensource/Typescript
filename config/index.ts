@@ -89,7 +89,6 @@ const initGlobalConfigFiles = (config: any, assetsConfig: any) => {
   config.files.configs = getGlobbedPaths(assetsConfig.config); // Setting Globbed config files
   // config.files.sockets = getGlobbedPaths(assets.sockets); // Setting Globbed socket files
   config.files.policies = getGlobbedPaths(assetsConfig.policies); // Setting Globbed policies files
-  console.log(config.files.routes)
 };
 
 /**
@@ -112,6 +111,7 @@ const initGlobalConfig: () => IConfig = () => {
     _.pickBy(process.env, (_value, key) => key.startsWith('WAOS_NODE_')),
     (_v, k) => k.split('_').slice(2).join('.'),
   );
+
   // convert string array from sys  to real array
   environmentVars = _.mapValues(environmentVars, (v) => ((v[0] === '[' && v[v.length - 1] === ']') ? v.replace(/'/g, '').slice(1, -1).split(',') : v));
   const environmentConfigVars = {};

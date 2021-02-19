@@ -6,7 +6,7 @@ import * as policy from '../../../lib/middlewares/policy';
 /**
  * Invoke Uploads Permissions
  */
-export default function invokeRolesPolicies() {
+const invokeRolesPolicies = () => {
   policy.Acl.allow([{
     roles: ['user', 'admin'],
     allows: [{
@@ -17,4 +17,8 @@ export default function invokeRolesPolicies() {
       permissions: ['get'],
     }],
   }]);
-}
+};
+/**
+ * Invoke Uploads Permissions
+ */
+export default invokeRolesPolicies();

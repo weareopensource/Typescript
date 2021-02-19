@@ -50,6 +50,7 @@ describe('Tasks Schema Tests :', () => {
     test('should be able remove unknown when trying a different schema', (done) => {
         task.toto = '';
         const result = tasks_schema_1.default.validate(task, options);
+        // @ts-ignore
         expect(result.toto).toBeUndefined();
         done();
     });

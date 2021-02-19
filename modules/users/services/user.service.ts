@@ -45,7 +45,7 @@ export async function create(user): Promise<any> {
   }
   const result = await UserRepository.create(user);
   // Remove sensitive data before return
-  return Promise.resolve(removeSensitive(result));
+  return removeSensitive(result);
 }
 
 /**
@@ -86,7 +86,7 @@ export async function update(user, body, option?: 'admin' | 'recover') {
   else if (option === 'recover') user = _.assignIn(user, removeSensitive(body, config.whitelists.users.recover));
 
   const result = await UserRepository.update(user);
-  return Promise.resolve(removeSensitive(result));
+  return removeSensitive(result);
 }
 
 /**
@@ -101,11 +101,9 @@ export async function terms(user) {
 }
 
 export async function deleteUser(user: IUser) {
-  const result = await UserRepository.deleteUser(user);
-  return Promise.resolve(result);
+  return UserRepository.deleteUser(user);
 }
 
 export async function stats() {
-  const result = await UserRepository.stats();
-  return Promise.resolve(result);
+  return UserRepository.stats();
 }

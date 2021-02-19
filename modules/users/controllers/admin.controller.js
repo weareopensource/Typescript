@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userByPage = exports.userByID = exports.stats = exports.deleteUser = exports.update = exports.get = exports.list = void 0;
+exports.userByPage = exports.userByID = exports.stats = exports.deleteUser = exports.update = exports.getUser = exports.list = void 0;
 const tslib_1 = require("tslib");
 const errors_1 = tslib_1.__importDefault(require("../../../lib/helpers/errors"));
 const responses_1 = require("../../../lib/helpers/responses");
@@ -25,11 +25,11 @@ exports.list = list;
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-function get(req, res) {
+function getUser(req, res) {
     const user = req.model ? req.model.toJSON() : {};
     responses_1.success(res, 'user get')(user);
 }
-exports.get = get;
+exports.getUser = getUser;
 /**
  * @desc Endpoint to ask the service to update a user
  * @param {Object} req - Express request object

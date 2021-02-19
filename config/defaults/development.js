@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 const config = {
     files: {
         configs: [],
@@ -167,8 +170,13 @@ const config = {
         options: {
             service: 'WAOS_NODE_mailer_options_service',
             auth: {
+                // @ts-ignore
+                type: 'LOGIN',
                 user: 'WAOS_NODE_mailer_options_auth_user',
-                pass: 'WAOS_NODE_mailer_options_auth_pass',
+                credentials: {
+                    user: 'WAOS_NODE_mailer_options_auth_user',
+                    pass: 'WAOS_NODE_mailer_options_auth_pass',
+                },
             },
         },
     },

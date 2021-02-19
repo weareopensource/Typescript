@@ -59,6 +59,7 @@ describe('Tasks Schema Tests :', () => {
     task.toto = '';
 
     const result = schema.validate(task, options);
+    // @ts-ignore
     expect(result.toto).toBeUndefined();
     done();
   });

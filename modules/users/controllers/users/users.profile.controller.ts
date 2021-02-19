@@ -58,12 +58,10 @@ export async function deleteUser(req: NodeRequest, res: Response) {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-export async function userInfo(req: NodeRequest, res: Response) {
-  console.log(test)
+export async function getMe(req: NodeRequest, res: Response) {
   // Sanitize the user - short term solution. Copied from core.controller.js
   // TODO create proper passport mock: See https://gist.github.com/mweibel/5219403
-  let user = {};
-  console.log(req.user.id)
+  let user;
   if (req.user) {
     user = {
       id: req.user.id,

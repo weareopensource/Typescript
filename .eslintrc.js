@@ -20,7 +20,7 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-shadow': 0,
     'operator-linebreak': 0,
-    'naming-convention': 1,
+    'naming-convention': 0,
   },
   parserOptions: {
     project: './tsconfig.json',
