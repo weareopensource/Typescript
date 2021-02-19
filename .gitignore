@@ -75,3 +75,5 @@ mongod
 dist/
 *.js.map
 config/**/*.js
+lib/**/*.js
+modules/**/*.js
