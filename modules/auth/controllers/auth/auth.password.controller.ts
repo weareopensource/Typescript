@@ -38,6 +38,7 @@ export async function forgot(req: NodeRequest, res: Response) {
     from: config.mailer.from,
     to: user.email,
     subject: 'Password Reset',
+    // @ts-ignore
     params: {
       displayName: `${user.firstName} ${user.lastName}`,
       url: `${config.cors.origin[0]}/reset?token=${user.resetPasswordToken}`,
@@ -92,6 +93,7 @@ export async function reset(req: NodeRequest, res: Response) {
     from: config.mailer.from,
     to: user.email,
     subject: 'Your password has been changed',
+    // @ts-ignore
     params: {
       displayName: `${user.firstName} ${user.lastName}`,
       appName: config.app.title,

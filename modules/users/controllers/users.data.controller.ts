@@ -64,6 +64,7 @@ export async function getMail(req: NodeRequest, res: Response) {
       from: config.mailer.from,
       to: req.user.email,
       subject: `${config.app.title}: your data`,
+      // @ts-ignore
       params: {
         result: JSON.stringify(result),
         displayName: `${req.user.firstName} ${req.user.lastName}`,
