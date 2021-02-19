@@ -73,3 +73,5 @@ mongod
 # Typesript
 # =========
 dist/
+*.js.map
+config/**/*.js
