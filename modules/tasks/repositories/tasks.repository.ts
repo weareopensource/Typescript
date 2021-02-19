@@ -77,7 +77,7 @@ export async function deleteMany(filter) {
  * @return {Object} scrap
  */
 export async function stats() {
-  return Task.countDocuments();
+  return Task.countDocuments().exec();
 }
 
 /**

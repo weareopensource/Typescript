@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import ACL from 'acl';
 import { error } from '../helpers/responses';
 
-/* eslint new-cap: 0 */
+// eslint-disable-next-line new-cap
 export const Acl = new ACL(new ACL.memoryBackend()); // Using the memory backend
 
 export function isAllowed(req: Request & { user: any }, res: Response, next: NextFunction) {

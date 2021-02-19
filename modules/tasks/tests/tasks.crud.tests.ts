@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 import request from 'supertest';
-import path from 'path';
+
 import * as express from '../../../lib/services/express';
 import * as multerService from '../../../lib/services/multer';
 import * as mongooseService from '../../../lib/services/mongoose';
@@ -11,7 +11,8 @@ import * as mongooseService from '../../../lib/services/mongoose';
  * Unit tests
  */
 describe('Tasks CRUD Tests :', () => {
-  let UserService;
+  let UserService: any;
+
   let app;
   let agent;
   let credentials;
@@ -28,7 +29,7 @@ describe('Tasks CRUD Tests :', () => {
       await mongooseService.connect();
       await multerService.storage();
       await mongooseService.loadModels();
-      UserService = require(path.resolve('./modules/users/services/user.service'));
+      UserService = await import('../../users/services/user.service');
       // init application
       app = express.init();
       agent = request.agent(app);
@@ -262,7 +263,7 @@ describe('Tasks CRUD Tests :', () => {
       }
       // del user
       try {
-        await UserService.delete(user);
+        await UserService.deleteUser(user);
       } catch (err) {
         console.log(err);
       }

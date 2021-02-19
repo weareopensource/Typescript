@@ -20,10 +20,12 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-shadow': 0,
     'operator-linebreak': 0,
+    'naming-convention': 0,
   },
   parserOptions: {
     project: './tsconfig.json',
     createDefaultProgram: true,
+    ecmaVersion: 10,
     sourceType: 'module',
   },
   plugins: [

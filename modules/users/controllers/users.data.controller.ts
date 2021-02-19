@@ -34,7 +34,7 @@ export async function deleteUser(req: NodeRequest, res: Response) {
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-export async function get(req: NodeRequest, res: Response) {
+export async function getAnyUser(req: NodeRequest, res: Response) {
   try {
     const result = {
       user: await UserService.get(req.user),
@@ -52,23 +52,25 @@ export async function get(req: NodeRequest, res: Response) {
  */
 export async function getMail(req: NodeRequest, res: Response) {
   try {
-    // const result = {
-    //   user: await UserService.get(req.user),
-    //   tasks: await TaskDataService.list(req.user),
-    //   uploads: await UploadDataService.list(req.user),
-    // };
+    const result = {
+      user: await UserService.get(req.user),
+      tasks: await TaskDataService.list(req.user),
+      uploads: await UploadDataService.list(req.user),
+    };
 
     // send mail
     const mail = await sendMail({
+      html: 'data-privacy-email',
       from: config.mailer.from,
       to: req.user.email,
       subject: `${config.app.title}: your data`,
-      // params: {
-      //   result: JSON.stringify(result),
-      //   displayName: `${req.user.firstName} ${req.user.lastName}`,
-      //   appName: config.app.title,
-      //   appContact: config.app.contact,
-      // },
+      // @ts-ignore
+      params: {
+        result: JSON.stringify(result),
+        displayName: `${req.user.firstName} ${req.user.lastName}`,
+        appName: config.app.title,
+        appContact: config.app.contact,
+      },
     });
 
     if (!mail.accepted) return error(res, 400, 'Bad Request', 'Failure sending email')();

@@ -4,12 +4,13 @@
 import { hash } from 'bcrypt';
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
+import config from '../../../../config';
+
 import getMessage from '../../../../lib/helpers/errors';
 import sendMail from '../../../../lib/helpers/mails';
 import { error, NodeRequest, success } from '../../../../lib/helpers/responses';
-import config from '../../../../config';
-import * as AuthService from '../../services/auth.service';
 import * as UserService from '../../../users/services/user.service';
+import * as AuthService from '../../services/auth.service';
 
 /**
  * @desc Endpoint to init password reset mail
@@ -33,15 +34,17 @@ export async function forgot(req: NodeRequest, res: Response) {
   }
   // send mail
   const mail = await sendMail({
+    html: 'reset-password-confirm-email',
     from: config.mailer.from,
     to: user.email,
     subject: 'Password Reset',
-    // params: {
-    //   displayName: `${user.firstName} ${user.lastName}`,
-    //   url: `${config.cors.origin[0]}/reset?token=${user.resetPasswordToken}`,
-    //   appName: config.app.title,
-    //   appContact: config.app.contact,
-    // },
+    // @ts-ignore
+    params: {
+      displayName: `${user.firstName} ${user.lastName}`,
+      url: `${config.cors.origin[0]}/reset?token=${user.resetPasswordToken}`,
+      appName: config.app.title,
+      appContact: config.app.contact,
+    },
   });
   if (!mail.accepted) return error(res, 400, 'Bad Request', 'Failure sending email')();
   success(res, 'An email has been sent with further instructions')({ status: true });
@@ -90,11 +93,12 @@ export async function reset(req: NodeRequest, res: Response) {
     from: config.mailer.from,
     to: user.email,
     subject: 'Your password has been changed',
-    // params: {
-    //   displayName: `${user.firstName} ${user.lastName}`,
-    //   appName: config.app.title,
-    //   appContact: config.app.contact,
-    // },
+    // @ts-ignore
+    params: {
+      displayName: `${user.firstName} ${user.lastName}`,
+      appName: config.app.title,
+      appContact: config.app.contact,
+    },
   });
   if (!mail.accepted) return error(res, 400, 'Bad Request', 'Failure sending email')();
   success(res, 'An email has been sent with further instructions')({ status: true });

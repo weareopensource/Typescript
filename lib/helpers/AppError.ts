@@ -24,19 +24,19 @@ class AppError extends Error {
 
   public details: any;
 
-  constructor(message: string, options?: IAppErrorOptions) {
+  constructor(message: string, { code, details, status }: IAppErrorOptions) {
     super(message);
     // Set HTTP status code
-    this.status = options?.status || 500;
+    this.status = status || 500;
 
     // Set API error code
-    this.code = options?.code || AppErrorCodes.serverError;
+    this.code = code || AppErrorCodes.serverError;
 
     // Ensures that stack trace uses our subclass name
     this.name = this.constructor.name;
 
     // Share clean messages for api feedback
-    if (options?.details) this.details = options?.details;
+    if (details) this.details = details;
     else this.details = [{ message }];
 
     // Ensures the AppError subclass is sliced out of the

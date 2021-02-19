@@ -10,14 +10,14 @@ export interface NodeRequest extends Request {
   model?: any;
   login: any;
   multerErr?: any;
-  file?: any;
+  file: any;
   upload?: any;
   sharpSize?: any;
   sharpOption?: any;
 }
 
-export function success(res: any, message: string): any {
-  return (data) => {
+export function success<T>(res: any, message: string) {
+  return (data?: T) => {
     const result = {
       type: 'success',
       message,
@@ -29,8 +29,8 @@ export function success(res: any, message: string): any {
   };
 }
 
-export function error(res: Response, code?: number, message?: string, description?: string): any {
-  return (errorDetails) => {
+export function error(res: Response, code?: number, message?: string, description?: string) {
+  return (errorDetails?: any) => {
     const result = {
       type: 'error',
       message: message || errorDetails.message,

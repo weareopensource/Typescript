@@ -1,3 +1,5 @@
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
+
 export interface IConfig {
   secure?: any;
   files: {
@@ -120,12 +122,13 @@ export interface FileLogger {
 
 export interface Mailer {
   from: string;
-  options: MailerOptions;
+  options: SMTPTransport.Options;
 }
 
 export interface MailerOptions {
   service: string;
   auth: Auth;
+  debug?: string;
 }
 
 export interface Auth {
@@ -234,6 +237,9 @@ export interface Zxcvbn {
   minimumScore: number;
 }
 
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 const config: IConfig = {
   files: {
     configs: [],
@@ -415,8 +421,13 @@ const config: IConfig = {
     options: {
       service: 'WAOS_NODE_mailer_options_service',
       auth: {
+        // @ts-ignore
+        type: 'LOGIN',
         user: 'WAOS_NODE_mailer_options_auth_user',
-        pass: 'WAOS_NODE_mailer_options_auth_pass',
+        credentials: {
+          user: 'WAOS_NODE_mailer_options_auth_user',
+          pass: 'WAOS_NODE_mailer_options_auth_pass',
+        },
       },
     },
   },

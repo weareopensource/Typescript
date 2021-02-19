@@ -43,16 +43,20 @@ const seedData = async () => {
     console.log(chalk.bold.green(`database selected: ${database}`));
 
     const files = await listDir(database);
+    if (!files) {
+      throw new Error('No files in directory database.');
+    }
 
-    for (const file of files) {
+    await Promise.all(files.map(async (file) => {
       if (file.slice(-4) === 'bson' && !config.db.restoreExceptions.includes(file.split('.')[0])) {
         const collection = file.slice(0, -5);
 
         // read file
         const buffer = await importFile(database, collection);
+        if (!buffer) throw new Error('Could not import database file.');
         let bfIdx = 0;
         const items = [];
-        while (bfIdx < buffer.length) bfIdx = deserializeStream(buffer, bfIdx, 1, items, items.length, undefined);
+        while (bfIdx < buffer.length) bfIdx = deserializeStream(buffer, bfIdx, 1, items, items.length, {});
 
         // insert
         if (collection.split('.')[0] === 'uploads') {
@@ -65,7 +69,7 @@ const seedData = async () => {
 
         console.log(chalk.blue(`Database Seeding ${collection} : ${items.length}`));
       }
-    }
+    }));
   } catch (err) {
     console.log(chalk.bold.red(`Error ${err}`));
   }

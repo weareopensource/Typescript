@@ -40,15 +40,20 @@ const seedData = async () => {
         database = database.split('?')[0];
         console.log(chalk_1.default.bold.green(`database selected: ${database}`));
         const files = await listDir(database);
-        for (const file of files) {
+        if (!files) {
+            throw new Error('No files in directory database.');
+        }
+        await Promise.all(files.map(async (file) => {
             if (file.slice(-4) === 'bson' && !config_1.default.db.restoreExceptions.includes(file.split('.')[0])) {
                 const collection = file.slice(0, -5);
                 // read file
                 const buffer = await importFile(database, collection);
+                if (!buffer)
+                    throw new Error('Could not import database file.');
                 let bfIdx = 0;
                 const items = [];
                 while (bfIdx < buffer.length)
-                    bfIdx = bson_1.deserializeStream(buffer, bfIdx, 1, items, items.length, undefined);
+                    bfIdx = bson_1.deserializeStream(buffer, bfIdx, 1, items, items.length, {});
                 // insert
                 if (collection.split('.')[0] === 'uploads') {
                     const Service = require(path_1.default.resolve(`./modules/${collection.split('.')[0]}/services/${collection.split('.')[0]}.data.service`));
@@ -60,7 +65,7 @@ const seedData = async () => {
                 }
                 console.log(chalk_1.default.blue(`Database Seeding ${collection} : ${items.length}`));
             }
-        }
+        }));
     }
     catch (err) {
         console.log(chalk_1.default.bold.red(`Error ${err}`));

@@ -13,7 +13,7 @@ const Attachment = createModel({ bucketName: 'uploads', model: 'Uploads' });
  * @param {Object} Filter
  * @return {Array} uploads
  */
-export function list(filter) {
+export async function list(filter) {
   return Uploads.find(filter)
     .select('filename uploadDate contentType')
     .sort('-createdAt')
@@ -25,17 +25,11 @@ export function list(filter) {
  * @param {String} uploadName
  * @return {Stream} upload
  */
-export function get(uploadName) {
-  return Uploads.findOne({ filename: uploadName })
-    .exec();
+export async function get(uploadName) {
+  return Uploads.findOne({ filename: uploadName }).exec();
 }
 
-/**
- * @desc Function to get an upload stream from db
- * @param {Object} Upload
- * @return {Stream} upload
- */
-export function getStream(upload) {
+export async function getStream(upload) {
   return Attachment.read(upload);
 }
 
@@ -45,9 +39,8 @@ export function getStream(upload) {
  * @param {Object} upload
  * @return {Object} upload updated
  */
-export function update(id, upload) {
-  return Uploads.findOneAndUpdate({ _id: id }, upload, { new: true })
-    .exec();
+export async function update(id, upload) {
+  return Uploads.findOneAndUpdate({ _id: id }, upload, { new: true }).exec();
 }
 
 /**
