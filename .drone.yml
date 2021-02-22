@@ -7,6 +7,7 @@ steps:
     image: node:13
     commands:
       - npm i
+      - npm run compile
       - WAOS_NODE_db_uri='mongodb://mongo:27017/WaosNodeTest' npm run test
 services:
   - name: mongo
@@ -21,6 +22,7 @@ steps:
     image: node:14
     commands:
       - npm i
+      - npm run compile
       - WAOS_NODE_db_uri='mongodb://mongo:27017/WaosNodeTest' npm run test
 services:
   - name: mongo
@@ -36,6 +38,7 @@ steps:
     failure: ignore
     commands:
       - npm i
+      - npm run compile
       - WAOS_NODE_db_uri='mongodb://mongo:27017/WaosNodeTest' npm run test
 services:
   - name: mongo
