@@ -188,11 +188,11 @@ const test = gulp.series(dropDB, jest);
 export { test };
 
 // Run project tests with coverage
-const testWatch = gulp.series(dropDB, lint, jestWatch);
+const testWatch = gulp.series(dropDB, jestWatch);
 export { testWatch };
 
 // Run project tests with coverage
-const testCoverage = gulp.series(dropDB, lint, jestCoverage);
+const testCoverage = gulp.series(dropDB, jestCoverage);
 export { testCoverage };
 
 // Run Mongoose Seed

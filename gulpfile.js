@@ -165,10 +165,10 @@ const seedMongooseUser = async () => {
 const test = gulp_1.default.series(dropDB, jest);
 exports.test = test;
 // Run project tests with coverage
-const testWatch = gulp_1.default.series(dropDB, lint, jestWatch);
+const testWatch = gulp_1.default.series(dropDB, jestWatch);
 exports.testWatch = testWatch;
 // Run project tests with coverage
-const testCoverage = gulp_1.default.series(dropDB, lint, jestCoverage);
+const testCoverage = gulp_1.default.series(dropDB, jestCoverage);
 exports.testCoverage = testCoverage;
 // Run Mongoose Seed
 const seed = gulp_1.default.series(dropDB, seedMongoose);
