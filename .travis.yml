@@ -11,6 +11,7 @@ services:
   - mongodb
 install:
   - npm i
+  - npm run compile
 before_script:
   - npm rebuild bcrypt --update-binary
 after_success:

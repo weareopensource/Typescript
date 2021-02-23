@@ -6,7 +6,7 @@ module.exports = {
     browser: true,
     jest: true,
   },
-  extends: ['airbnb-base'],
+  extends: 'airbnb-typescript/base',
   rules: {
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -20,12 +20,17 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-shadow': 0,
     'operator-linebreak': 0,
+    'naming-convention': 0,
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    project: './tsconfig.json',
+    createDefaultProgram: true,
     ecmaVersion: 10,
     sourceType: 'module',
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
   overrides: [
     {
       files: [

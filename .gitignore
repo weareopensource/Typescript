@@ -69,3 +69,11 @@ mongod
 *.ntvs*
 *.njsproj
 *.sln
+
+# Typesript
+# =========
+dist/
+*.js.map
+config/**/*.js
+lib/**/*.js
+modules/**/*.js

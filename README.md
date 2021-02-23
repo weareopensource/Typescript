@@ -1,12 +1,12 @@
-[![Build Status](https://badges.weareopensource.me/travis/weareopensource/Typescript.svg?style=flat-square)](https://travis-ci.org/weareopensource/Typescript) [![Drone](https://badges.weareopensource.me/drone/build/weareopensource/Typescript?style=flat-square)](https://cloud.drone.io/weareopensource/Typescript) [![Coveralls Status](https://badges.weareopensource.me/coveralls/github/weareopensource/Typescript.svg?style=flat-square)](https://coveralls.io/github/weareopensource/Typescript) [![Code Climate](https://badges.weareopensource.me/codeclimate/maintainability-percentage/weareopensource/Typescript.svg?style=flat-square)](https://codeclimate.com/github/weareopensource/Typescript/maintainability)
+[![Build Status](https://badges.weareopensource.me/travis/weareopensource/Node.svg?style=flat-square)](https://travis-ci.org/weareopensource/Node) [![Drone](https://badges.weareopensource.me/drone/build/weareopensource/Node?style=flat-square)](https://cloud.drone.io/weareopensource/Node) [![Coveralls Status](https://badges.weareopensource.me/coveralls/github/weareopensource/Node.svg?style=flat-square)](https://coveralls.io/github/weareopensource/Node) [![Code Climate](https://badges.weareopensource.me/codeclimate/maintainability-percentage/weareopensource/Node.svg?style=flat-square)](https://codeclimate.com/github/weareopensource/Node/maintainability)
  [![Dependabot badge](https://badges.weareopensource.me/badge/Dependabot-enabled-2768cf.svg?style=flat-square)](https://dependabot.com)
- [![Known Vulnerabilities](https://snyk.io/test/github/weareopensource/typescript/badge.svg?style=flat-square)](https://snyk.io/test/github/weareopensource/typescript) [![Docker Pulls](https://badges.weareopensource.me/docker/pulls/weareopensource/typescript?style=flat-square)](https://hub.docker.com/repository/docker/weareopensource/typescript)
+ [![Known Vulnerabilities](https://snyk.io/test/github/weareopensource/node/badge.svg?style=flat-square)](https://snyk.io/test/github/weareopensource/node) [![Docker Pulls](https://badges.weareopensource.me/docker/pulls/weareopensource/node?style=flat-square)](https://hub.docker.com/repository/docker/weareopensource/node)
 
-# :globe_with_meridians: [WeAreOpenSource](https://weareopensource.me) Node Typescript - Draft
+# :globe_with_meridians: [WeAreOpenSource](https://weareopensource.me) Node + Typescript - Beta
 
 ## :book: Presentation
 
-This project is a Node Typescript stack that can be ran as a standalone BackEnd. Or in a fullstack with another repo of your choice (ex: [Vue](https://github.com/weareopensource/Vue), [Swift](https://github.com/weareopensource/Swift)).
+This project is a Node stack that can be ran as a standalone BackEnd. Or in a fullstack with another repo of your choice (ex: [Vue](https://github.com/weareopensource/Vue), [Swift](https://github.com/weareopensource/Swift)).
 
 Quick links :
 
@@ -19,6 +19,7 @@ Our stack node is actually in Beta.
 # :computer: Node / Express / Mongoose - Sequelize Orm
 
 * [**Knowledges JS**](https://blog.weareopensource.me/js-knwoledges/)
+* [**Demo**](https://node.weareopensource.me) (or working with [Vue](https://github.com/weareopensource/Vue) stack [here](https://vue.weareopensource.me), email: *test@waos.me*, password: *TestWaos@2019*)
 
 ## :package: Technology Overview
 
