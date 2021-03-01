@@ -98,7 +98,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.0",
-    "@commitlint/config-conventional": "^12.0.0",
+    "@commitlint/config-conventional": "^12.0.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@types/acl": "^0.4.37",
