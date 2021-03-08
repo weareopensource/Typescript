@@ -544,7 +544,6 @@ describe('User CRUD Tests :', () => {
             email: user.email,
           })
           .expect(400);
-        console.log(result)
         expect(result.body.message).toBe('Bad Request');
         expect(result.body.description).toBe('Failure sending email');
       } catch (err) {
@@ -953,7 +952,7 @@ describe('User CRUD Tests :', () => {
           .expect(200);
         expect(result.body.type).toBe('success');
         expect(result.body.message).toBe('user and his data were deleted');
-        expect(result.body.data.user.id).toBe(userEdited.id);
+        expect(result.body.data.id).toBe(userEdited.id);
         expect(result.body.data.user.deletedCount).toBe(1);
         expect(result.body.data.tasks.deletedCount).toBe(0);
         expect(result.body.data.uploads.deletedCount).toBe(0);
