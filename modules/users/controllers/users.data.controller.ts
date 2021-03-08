@@ -22,8 +22,7 @@ export async function deleteUser(req: NodeRequest, res: Response) {
       tasks: await TaskDataService.deleteTask(req.user),
       uploads: await UploadDataService.deleteMany(req.user),
     };
-    result.user.id = req.user.id;
-    success(res, 'user and his data were deleted')(result);
+    success(res, 'user and his data were deleted')({ id: req.user.id, ...result });
   } catch (err) {
     error(res, 422, 'Unprocessable Entity', getMessage(err))(err);
   }

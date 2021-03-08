@@ -30,13 +30,11 @@ export const connect = async (): Promise<mongoose.Mongoose> => {
     // see: http://mongoosejs.com/docs/connections.html#use-mongo-client
     const mongoOptions = config.db.options;
 
-    if (mongoOptions.sslCA) mongoOptions.sslCA = fs.readFileSync(mongoOptions.sslCA);
-    if (mongoOptions.sslCert) mongoOptions.sslCert = fs.readFileSync(mongoOptions.sslCert);
-    if (mongoOptions.sslKey) mongoOptions.sslKey = fs.readFileSync(mongoOptions.sslKey);
+    if (config.db.sslLocations && config.db.sslLocations.sslCA) mongoOptions.sslCA = [fs.readFileSync(config.db.sslLocations.sslCA)];
+    if (config.db.sslLocations && config.db.sslLocations.sslCert) mongoOptions.sslCert = fs.readFileSync(config.db.sslLocations.sslCert);
+    if (config.db.sslLocations && config.db.sslLocations.sslKey) mongoOptions.sslKey = fs.readFileSync(config.db.sslLocations.sslKey);
 
-    await mongoose.connect(config.db.uri, { user: config.db.options.user, pass: config.db.options.pass });
-
-    // Enabling mongoose debug mode if required
+    await mongoose.connect(config.db.uri, mongoOptions);
     mongoose.set('debug', config.db.debug);
 
     return mongoose;
@@ -48,7 +46,10 @@ export const connect = async (): Promise<mongoose.Mongoose> => {
   }
 };
 
-export const disconnect = async (): Promise<void> => {
+/**
+ * Disconnect from the MongoDB server
+ */
+export const disconnect = async () => {
   await mongoose.disconnect();
   console.info(chalk.yellow('Disconnected from MongoDB.'));
 };

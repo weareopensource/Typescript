@@ -1,4 +1,5 @@
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { ConnectOptions } from 'mongoose';
 
 export interface IConfig {
   secure?: any;
@@ -66,21 +67,16 @@ export interface CSRF {
 export interface DB {
   uri: string;
   debug: boolean;
-  options: DBOptions;
+  options: ConnectOptions;
+  sslLocations?: DBSSLLocations;
   promise: PromiseConstructor;
   restoreExceptions: any[];
 }
 
-export interface DBOptions {
-  user: string;
-  pass: string;
-  useCreateIndex: boolean;
-  useUnifiedTopology: boolean;
-  useNewUrlParser: boolean;
-  useFindAndModify: boolean;
-  sslCA?: Buffer | string;
-  sslKey?: Buffer | string;
-  sslCert?: Buffer | string;
+export interface DBSSLLocations {
+  sslCA?: string;
+  sslKey?: string;
+  sslCert?: string;
 }
 
 export interface Joi {
@@ -271,7 +267,7 @@ const config: IConfig = {
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: false,
+      useFindAndModify: false
       /**
        * Uncomment to enable ssl certificate based authentication to mongodb
        * servers. Adjust the settings below for your specific certificate

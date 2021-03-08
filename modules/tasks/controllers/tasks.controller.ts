@@ -67,8 +67,7 @@ export async function update(req: NodeRequest, res: Response) {
 export async function deleteTask(req: NodeRequest, res: Response) {
   try {
     const result = await TasksService.deleteTask(req.task);
-    result.id = req.task.id;
-    success(res, 'task deleted')(result);
+    success(res, 'task deleted')({ id: req.task.id, ...result });
   } catch (err) {
     error(res, 422, 'Unprocessable Entity', getMessage(err))(err);
   }

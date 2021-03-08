@@ -52,8 +52,7 @@ export async function update(req: NodeRequest, res: Response) {
 export async function deleteUser(req: NodeRequest, res: Response) {
   try {
     const result = await UserService.deleteUser(req.model);
-    result.id = req.model.id;
-    success(res, 'user deleted')(result);
+    success(res, 'user deleted')({ id: req.model.id,...result });
   } catch (err) {
     error(res, 422, 'Unprocessable Entity', getMessage(err))(err);
   }
