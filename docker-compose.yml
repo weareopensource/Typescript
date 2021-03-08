@@ -14,7 +14,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - 'WAOS_NODE_db_uri=mongodb://mongo:27017/WaosNodeDev'
+      - 'WAOS_NODE_db_uri=mongodb://mongo:27017/WaosTypescriptDev'
       - 'WAOS_NODE_host=0.0.0.0'
 
   mongo:

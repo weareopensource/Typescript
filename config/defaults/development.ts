@@ -259,7 +259,7 @@ const config: IConfig = {
     timeout: 2 * 60 * 1000,
   },
   db: {
-    uri: 'mongodb://localhost/WaosNodeDev',
+    uri: 'mongodb://localhost/WaosTypescriptDev',
     debug: true,
     options: {
       user: '',
@@ -306,7 +306,7 @@ const config: IConfig = {
   },
   livereload: false,
   // orm: {
-  //    dbname: 'WaosNodeDev',
+  //    dbname: 'WaosTypescriptDev',
   //    user: '',
   //    pass: '',
   //    options: {
