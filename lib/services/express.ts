@@ -56,7 +56,7 @@ export function initMiddleware(app: Application) {
   app.use(bodyParser.urlencoded({
     extended: true,
   }));
-  app.use(bodyParser.json());
+  app.use(bodyParser.json(config.bodyParser));
   app.use(methodOverride());
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
