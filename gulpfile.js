@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prod = exports.debug = exports.drop = exports.seedUser = exports.seed = exports.testCoverage = exports.testWatch = exports.test = exports.dropDB = exports.dropMongo = exports.jestCoverage = exports.jestWatch = exports.jest = exports.watch = exports.nodemonDebug = exports.nodemon = exports.lint = void 0;
+exports.prod = exports.debug = exports.drop = exports.seedUser = exports.seed = exports.testCoverage = exports.testWatch = exports.test = exports.dropDB = exports.dropMongo = exports.jestCoverage = exports.jestWatch = exports.jest = exports.watch = exports.nodemonDebug = exports.nodemon = void 0;
 const tslib_1 = require("tslib");
 /**
  * Module dependencies.
@@ -17,14 +17,6 @@ const seedService = tslib_1.__importStar(require("./lib/services/seed"));
 const plugins = gulp_load_plugins_1.default();
 // default node env if not define
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-// ESLint JS
-const lint = () => {
-    const assets = lodash_1.default.union(assets_1.default.gulpConfig, assets_1.default.allTS, assets_1.default.tests);
-    return gulp_1.default.src(assets)
-        .pipe(plugins.eslint())
-        .pipe(plugins.eslint.format());
-};
-exports.lint = lint;
 // Nodemon
 const nodemon = (done) => {
     nodemon({
@@ -54,18 +46,20 @@ const watch = (done) => {
     plugins.refresh.listen();
     // Add watch rules
     gulp_1.default.watch(assets_1.default.views).on('change', plugins.refresh.changed);
-    // gulp.watch(defaultAssets.allJS, gulp.series(lint)).on('change', plugins.refresh.changed);
-    gulp_1.default.watch(assets_1.default.gulpConfig, gulp_1.default.series(lint));
+    // gulp.watch(defaultAssets.allJS).on('change', plugins.refresh.changed);
+    gulp_1.default.watch(assets_1.default.gulpConfig);
     done();
 };
 exports.watch = watch;
 // Jest UT
 const jest = (done) => {
-    core_1.runCLI({}, ['.']).then((result) => {
+    core_1.runCLI({}, ['.'])
+        .then((result) => {
         if (result.results && result.results.numFailedTests > 0)
             process.exit();
         done();
-    }).catch((e) => {
+    })
+        .catch((e) => {
         console.log(e);
     });
 };
@@ -82,16 +76,14 @@ const jestCoverage = (done) => {
         collectCoverage: true,
         collectCoverageFrom: assets_1.default.allJS,
         coverageDirectory: 'coverage',
-        coverageReporters: [
-            'json',
-            'lcov',
-            'text',
-        ],
-    }, ['.']).then((result) => {
+        coverageReporters: ['json', 'lcov', 'text'],
+    }, ['.'])
+        .then((result) => {
         if (result.results && result.results.numFailedTests > 0)
             process.exit();
         done();
-    }).catch((e) => {
+    })
+        .catch((e) => {
         console.log(e);
     });
 };
@@ -127,9 +119,11 @@ exports.dropDB = dropDB;
 const seedMongoose = async () => {
     try {
         await mongooseService.connect();
-        await seedService.start({
+        await seedService
+            .start({
             logResults: true,
-        }).catch((e) => {
+        })
+            .catch((e) => {
             console.log(e);
         });
         await mongooseService.disconnect();
@@ -180,13 +174,13 @@ exports.seedUser = seedUser;
 const drop = gulp_1.default.series(dropDB);
 exports.drop = drop;
 // Run project in development mode
-const dev = gulp_1.default.series(lint, gulp_1.default.parallel(nodemon, watch));
+const dev = gulp_1.default.series(gulp_1.default.parallel(nodemon, watch));
 exports.default = dev;
 // Run project in debug mode
-const debug = gulp_1.default.series(lint, gulp_1.default.parallel(nodemonDebug, watch));
+const debug = gulp_1.default.series(gulp_1.default.parallel(nodemonDebug, watch));
 exports.debug = debug;
 // Run project in production mode
-const prod = gulp_1.default.series(lint, gulp_1.default.parallel(nodemonDebug, watch));
+const prod = gulp_1.default.series(gulp_1.default.parallel(nodemonDebug, watch));
 exports.prod = prod;
 /**
  * Examples for Mocha TODO : switch in readme
@@ -211,7 +205,7 @@ exports.prod = prod;
 //   // Start livereload
 //   plugins.refresh.listen();
 //   // Add Server Test file rules
-//   gulp.watch(_.union(defaultAssets.tests, defaultAssets.allJS), gulp.series(lint, mocha)).on('change', plugins.refresh.changed);
+//   gulp.watch(_.union(defaultAssets.tests, defaultAssets.allJS), gulp.series(mocha)).on('change', plugins.refresh.changed);
 //   done();
 // };
 // exports.watchMocha = watchMocha;

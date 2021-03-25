@@ -7,7 +7,7 @@ interface IAssets {
   routes: string[];
   // sockets: 'modules/*/sockets/*.js',
   config: string[];
-  policies: string
+  policies: string;
   tests: string[];
   views: string[];
 }

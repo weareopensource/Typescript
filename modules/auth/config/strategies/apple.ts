@@ -7,9 +7,7 @@ import { NodeRequest } from '../../../../lib/helpers/responses';
 import config from '../../../../config';
 import auth from '../../controllers/auth.controller';
 
-const callbackURL = `${config.api.protocol}://${config.api.host}${
-  config.api.port ? ':' : ''
-}${config.api.port ? config.api.port : ''}/${
+const callbackURL = `${config.api.protocol}://${config.api.host}${config.api.port ? ':' : ''}${config.api.port ? config.api.port : ''}/${
   config.api.base
 }/auth/apple/callback`;
 
@@ -45,12 +43,7 @@ export async function prepare(req: NodeRequest, accessToken: string, refreshToke
 export default () => {
   const apple = config.oAuth.apple ? config.oAuth.apple : null;
   // Use google strategy
-  if (
-    apple &&
-    apple.clientID &&
-    apple.teamID &&
-    apple.keyID
-  ) {
+  if (apple && apple.clientID && apple.teamID && apple.keyID) {
     passport.use(
       new AppleStrategy(
         {

@@ -40,12 +40,14 @@ export function initLocalVariables(app: Application) {
  */
 export function initMiddleware(app: Application) {
   // Should be placed before express.static
-  app.use(compress({
-    filter(req, res) {
-      return (/json|text|javascript|css|font|svg/).test(res.getHeader('Content-Type'));
-    },
-    level: 9,
-  }));
+  app.use(
+    compress({
+      filter(req, res) {
+        return /json|text|javascript|css|font|svg/.test(res.getHeader('Content-Type'));
+      },
+      level: 9,
+    }),
+  );
   // Enable logger (morgan) if enabled in the configuration file
   if (_.has(config, 'log.format') && process.env.NODE_ENV !== 'test') {
     morgan.token('id', (req) => _.get(req, 'user.id') || 'Unknown id');
@@ -53,18 +55,22 @@ export function initMiddleware(app: Application) {
     app.use(morgan(logger.getLogFormat(), logger.getMorganOptions()));
   }
   // Request body parsing middleware should be above methodOverride
-  app.use(bodyParser.urlencoded({
-    extended: true,
-  }));
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    }),
+  );
   app.use(bodyParser.json(config.bodyParser));
   app.use(methodOverride());
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
-  app.use(cors({
-    origin: config.cors.origin || [],
-    credentials: config.cors.credentials || false,
-    optionsSuccessStatus: config.cors.optionsSuccessStatus || 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }));
+  app.use(
+    cors({
+      origin: config.cors.origin || [],
+      credentials: config.cors.credentials || false,
+      optionsSuccessStatus: config.cors.optionsSuccessStatus || 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    }),
+  );
 }
 
 /**
@@ -89,10 +95,12 @@ export function initHelmetHeaders(app: Application) {
   app.use(helmet.xssFilter());
   app.use(helmet.noSniff());
   app.use(helmet.ieNoOpen());
-  app.use(helmet.hsts({
-    maxAge: SIX_MONTHS,
-    includeSubDomains: true,
-  }));
+  app.use(
+    helmet.hsts({
+      maxAge: SIX_MONTHS,
+      includeSubDomains: true,
+    }),
+  );
   app.disable('x-powered-by');
 }
 

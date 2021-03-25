@@ -7,14 +7,17 @@ import User, { IUser } from '../models/user.model.mongoose';
  * @desc Function to get all user in db
  */
 export async function list(searchFilter: RegExp, page, perPage) {
-  const filter = searchFilter ? {
-    $or: [
-      { firstName: { $regex: `${searchFilter}`, $options: 'i' } },
-      { lastName: { $regex: `${searchFilter}`, $options: 'i' } },
-      { email: { $regex: `${searchFilter}`, $options: 'i' } },
-    ],
-  } : {};
-  return User.find(filter).limit(perPage)
+  const filter = searchFilter
+    ? {
+        $or: [
+          { firstName: { $regex: `${searchFilter}`, $options: 'i' } },
+          { lastName: { $regex: `${searchFilter}`, $options: 'i' } },
+          { email: { $regex: `${searchFilter}`, $options: 'i' } },
+        ],
+      }
+    : {};
+  return User.find(filter)
+    .limit(perPage)
     .skip(perPage * page)
     .select('-password -providerData')
     .sort('-createdAt')
@@ -86,17 +89,19 @@ export async function stats() {
  * @return {Object} locations
  */
 export async function importUser(users, filters) {
-  return User.bulkWrite(users.map((user) => {
-    const filter = {};
-    filters.forEach((value) => {
-      filter[value] = user[value];
-    });
-    return {
-      updateOne: {
-        filter,
-        update: user,
-        upsert: true,
-      },
-    };
-  }));
+  return User.bulkWrite(
+    users.map((user) => {
+      const filter = {};
+      filters.forEach((value) => {
+        filter[value] = user[value];
+      });
+      return {
+        updateOne: {
+          filter,
+          update: user,
+          upsert: true,
+        },
+      };
+    }),
+  );
 }

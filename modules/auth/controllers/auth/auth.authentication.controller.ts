@@ -163,7 +163,10 @@ export async function oauthCallback(req, res, next) {
         .status(200)
         .cookie('TOKEN', token, { httpOnly: true })
         .json({
-          user, tokenExpiresIn: Date.now() + config.jwt.expiresIn * 1000, type: 'sucess', message: 'oAuth Ok',
+          user,
+          tokenExpiresIn: Date.now() + config.jwt.expiresIn * 1000,
+          type: 'sucess',
+          message: 'oAuth Ok',
         });
     } catch (err) {
       return error(res, 422, 'Unprocessable Entity', getMessage(err.details || err))(err);

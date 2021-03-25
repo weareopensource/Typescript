@@ -6,9 +6,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import config from '../../../../config';
 import auth from '../../controllers/auth.controller';
 
-const callbackURL = `${config.api.protocol}://${config.api.host}${
-  config.api.port ? ':' : ''
-}${config.api.port ? config.api.port : ''}/${
+const callbackURL = `${config.api.protocol}://${config.api.host}${config.api.port ? ':' : ''}${config.api.port ? config.api.port : ''}/${
   config.api.base
 }/auth/google/callback`;
 

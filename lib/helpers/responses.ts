@@ -23,8 +23,7 @@ export function success<T>(res: any, message: string) {
       message,
       data,
     };
-    res.status(200)
-      .json(result);
+    res.status(200).json(result);
     return result;
   };
 }
@@ -38,8 +37,7 @@ export function error(res: Response, code?: number, message?: string, descriptio
       description: description || errorDetails.description || errorDetails.details || '',
       error: JSON.stringify(errorDetails),
     };
-    res.status(code || errorDetails.code)
-      .json(result);
+    res.status(code || errorDetails.code).json(result);
     return result;
   };
 }

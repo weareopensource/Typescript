@@ -111,7 +111,8 @@ export async function start() {
   }
 
   try {
-    if (config.secure && config.secure.credentials) http = await nodeHttps.createServer(config.secure.credentials, app).setTimeout(config.api.timeout).listen(config.api.port, config.api.host);
+    if (config.secure && config.secure.credentials)
+      http = await nodeHttps.createServer(config.secure.credentials, app).setTimeout(config.api.timeout).listen(config.api.port, config.api.host);
     else http = await nodeHttp.createServer(app).setTimeout(config.api.timeout).listen(config.api.port, config.api.host);
     logConfiguration();
     return {

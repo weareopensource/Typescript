@@ -48,8 +48,7 @@ export interface App {
   contact: string;
 }
 
-export interface Blacklists {
-}
+export interface Blacklists {}
 
 export interface BodyParser {
   limit: string;
@@ -107,10 +106,10 @@ export interface Log {
   fileLogger: FileLogger;
   options?: {
     stream?: {
-      directoryPath?: string,
-      fileName?: string,
-    },
-  },
+      directoryPath?: string;
+      fileName?: string;
+    };
+  };
 }
 
 export interface FileLogger {
@@ -250,8 +249,7 @@ const config: IConfig = {
   },
   app: {
     title: 'WeAreOpenSource Node - Development Environment',
-    description:
-      'Node - Boilerplate Back : Express, Jwt, Mongo, Sequelize (Beta) ',
+    description: 'Node - Boilerplate Back : Express, Jwt, Mongo, Sequelize (Beta) ',
     keywords: 'node, express, mongo, jwt, sequelize, stack, boilerplate',
     googleAnalyticsTrackingID: 'WAOS_NODE_app_googleAnalyticsTrackingID',
     contact: 'waos.me@gmail.com',
@@ -272,7 +270,7 @@ const config: IConfig = {
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: false
+      useFindAndModify: false,
       /**
        * Uncomment to enable ssl certificate based authentication to mongodb
        * servers. Adjust the settings below for your specific certificate
@@ -299,8 +297,7 @@ const config: IConfig = {
     // logging with Morgan - https://github.com/expressjs/morgan
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny', 'custom'
     format: 'custom',
-    pattern:
-      ':id :email :method :url :status :response-time ms - :res[content-length]', // only for custom format
+    pattern: ':id :email :method :url :status :response-time ms - :res[content-length]', // only for custom format
     fileLogger: {
       directoryPath: process.cwd(),
       fileName: 'app.log',
@@ -401,13 +398,7 @@ const config: IConfig = {
   },
   // zxcvbn is used to manage password security
   zxcvbn: {
-    forbiddenPasswords: [
-      '12345678',
-      'azertyui',
-      'qwertyui',
-      'azertyuiop',
-      'qwertyuiop',
-    ], // passwords forbidden
+    forbiddenPasswords: ['12345678', 'azertyui', 'qwertyui', 'azertyuiop', 'qwertyuiop'], // passwords forbidden
     minSize: 8, // min password size
     maxSize: 126, // max password size
     minimumScore: 3, // min password complexity score

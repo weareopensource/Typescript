@@ -7,7 +7,8 @@ import config from '../../config';
 import { error } from '../helpers/responses';
 
 export function cleanError(string: string) {
-  return string.replace(/conditions\[(.*?)\]/g, '')
+  return string
+    .replace(/conditions\[(.*?)\]/g, '')
     .replace(/checks\[(.*?)\]/g, '')
     .replace(/"/g, ' ')
     .replace(/\./g, ' ')
@@ -26,10 +27,7 @@ export function getResultFromJoi(body, schema, options) {
         error: {
           original: err._object,
           // fetch only message and type from each error
-          details: _.map(err.details, ({
-            message,
-            type,
-          }) => ({
+          details: _.map(err.details, ({ message, type }) => ({
             message: message.replace(/['"]/g, ''),
             type,
           })),
@@ -46,14 +44,16 @@ export function getResultFromJoi(body, schema, options) {
  */
 export function checkError(result: any) {
   if (result && result.error) {
-    if (result.error.original && (result.error.original.password || result.error.original.firstname)) result.error.original = _.pick(result.error.original, config.whitelists.users.default);
+    if (result.error.original && (result.error.original.password || result.error.original.firstname))
+      result.error.original = _.pick(result.error.original, config.whitelists.users.default);
     let description = '';
     result.error.details.forEach((err) => {
       const message = cleanError(err.message);
-      description += (`${message.charAt(0).toUpperCase() + message.slice(1).toLowerCase()}. `);
+      description += `${message.charAt(0).toUpperCase() + message.slice(1).toLowerCase()}. `;
     });
 
-    if (result.error._original && (result.error._original.password || result.error._original.firstname)) result.error._original = _.pick(result.error._original, config.whitelists.users.default);
+    if (result.error._original && (result.error._original.password || result.error._original.firstname))
+      result.error._original = _.pick(result.error._original, config.whitelists.users.default);
     return description;
   }
   return false;

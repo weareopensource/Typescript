@@ -17,20 +17,24 @@ import team from '../repositories/home.repository';
 export async function page(name) {
   const markdown = await fs.readFile(path.resolve(`./config/markdown/${name}.md`), 'utf8');
   const test = await fs.stat(path.resolve(`./config/markdown/${name}.md`));
-  return Promise.resolve([{
-    title: _.startCase(name),
-    updatedAt: test.mtime,
-    markdown,
-  }]);
+  return Promise.resolve([
+    {
+      title: _.startCase(name),
+      updatedAt: test.mtime,
+      markdown,
+    },
+  ]);
 }
 
 /**
  * @desc Function to get all versions
  */
 export async function releases(): Promise<any[]> {
-  const requests = config.repos.map((item) => axios.get(`https://api.github.com/repos/${item.owner}/${item.repo}/releases`, {
-    headers: item.token ? { Authorization: `token ${item.token}` } : {},
-  }));
+  const requests = config.repos.map((item) =>
+    axios.get(`https://api.github.com/repos/${item.owner}/${item.repo}/releases`, {
+      headers: item.token ? { Authorization: `token ${item.token}` } : {},
+    }),
+  );
   const results = await axios.all<any>(requests);
   return results.map((result, i) => ({
     title: config.repos[i].title,
@@ -48,9 +52,11 @@ export async function releases(): Promise<any[]> {
  */
 export async function changelogs() {
   const repos = _.filter<any>(config.repos, (repo) => repo.changelog);
-  const requests = repos.map((item) => axios.get(`https://api.github.com/repos/${item.owner}/${item.repo}/contents/${item.changelog}`, {
-    headers: item.token ? { Authorization: `token ${item.token}` } : {},
-  }));
+  const requests = repos.map((item) =>
+    axios.get(`https://api.github.com/repos/${item.owner}/${item.repo}/contents/${item.changelog}`, {
+      headers: item.token ? { Authorization: `token ${item.token}` } : {},
+    }),
+  );
   let results = await axios.all<any>(requests);
   results = results.map((result, i) => ({
     title: config.repos[i].title,

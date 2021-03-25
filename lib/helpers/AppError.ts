@@ -10,7 +10,7 @@ interface IMessage {
 }
 
 interface IAppErrorOptions {
-  details?: IMessage[],
+  details?: IMessage[];
   status?: number;
   code?: string;
 }

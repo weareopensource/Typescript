@@ -29,8 +29,7 @@ function joiZxcvbn(joi) {
           {
             name: 'minScore',
             ref: true,
-            assert: joi.number()
-              .required(),
+            assert: joi.number().required(),
             message: 'must be a number',
           },
         ],

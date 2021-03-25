@@ -70,7 +70,7 @@ export function generateRandomPassphrase() {
   while (password.length < 20 || repeatingCharacters.test(password)) {
     // build the random password
     password = generatePassword.generate({
-      length: Math.floor(Math.random() * (20)) + 20, // randomize length between 20 and 40 characters
+      length: Math.floor(Math.random() * 20) + 20, // randomize length between 20 and 40 characters
       numbers: true,
       symbols: false,
       uppercase: true,

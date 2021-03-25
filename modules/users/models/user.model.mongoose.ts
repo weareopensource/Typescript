@@ -6,55 +6,58 @@ import mongoose from 'mongoose';
 mongoose.Promise = Promise;
 
 export interface IUser extends mongoose.Document {
-  firstName?: string,
-  lastName?: string,
-  bio?: string,
-  position?: string,
-  email?: string,
-  avatar?: string,
-  roles?: string[],
+  firstName?: string;
+  lastName?: string;
+  bio?: string;
+  position?: string;
+  email?: string;
+  avatar?: string;
+  roles?: string[];
   /* Provider */
-  provider?: string,
-  providerData: {},
-  additionalProvidersData: {},
+  provider?: string;
+  providerData: {};
+  additionalProvidersData: {};
   /* Password */
-  password: string,
-  resetPasswordToken: string,
-  resetPasswordExpires: number,
+  password: string;
+  resetPasswordToken: string;
+  resetPasswordExpires: number;
   // startup requirement
-  terms: Date,
+  terms: Date;
   // other
-  complementary: {}, // put your specific project private data here
+  complementary: {}; // put your specific project private data here
 }
 /**
  * User Schema
  */
-const UserMongoose = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  bio: String,
-  position: String,
-  email: {
-    type: String,
-    unique: 'Email already exists',
+const UserMongoose = new mongoose.Schema(
+  {
+    firstName: String,
+    lastName: String,
+    bio: String,
+    position: String,
+    email: {
+      type: String,
+      unique: 'Email already exists',
+    },
+    avatar: String,
+    roles: [String],
+    /* Provider */
+    provider: String,
+    providerData: {},
+    additionalProvidersData: {},
+    /* Password */
+    password: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    // startup requirement
+    terms: Date,
+    // other
+    complementary: {}, // put your specific project private data here
   },
-  avatar: String,
-  roles: [String],
-  /* Provider */
-  provider: String,
-  providerData: {},
-  additionalProvidersData: {},
-  /* Password */
-  password: String,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  // startup requirement
-  terms: Date,
-  // other
-  complementary: {}, // put your specific project private data here
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  },
+);
 
 function addID(this: any) {
   return this._id.toHexString();

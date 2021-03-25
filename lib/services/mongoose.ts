@@ -13,9 +13,11 @@ import config from '../../config';
  */
 export async function loadModels(callback?: () => void) {
   // Globbing model files
-  await Promise.all(config.files.mongooseModels.map(async (modelPath: string) => {
-    await import(path.resolve(modelPath));
-  }));
+  await Promise.all(
+    config.files.mongooseModels.map(async (modelPath: string) => {
+      await import(path.resolve(modelPath));
+    }),
+  );
   if (callback) callback();
 }
 

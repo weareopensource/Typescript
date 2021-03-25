@@ -6,24 +6,27 @@ import mongoose from 'mongoose';
 mongoose.Promise = Promise;
 
 interface ITask extends mongoose.Document {
-  title: string,
-  description: string,
-  user: any
+  title: string;
+  description: string;
+  user: any;
 }
 
 /**
  * Data Model Mongoose
  */
-const TaskMongoose = new mongoose.Schema({
-  title: String,
-  description: String,
-  user: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'User',
+const TaskMongoose = new mongoose.Schema(
+  {
+    title: String,
+    description: String,
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+    },
   },
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  },
+);
 
 /**
  * @desc Function to add id (+ _id) to all objects

@@ -9,6 +9,7 @@ import multer from 'multer';
 import { createBucket } from 'mongoose-gridfs';
 import AppError from '../helpers/AppError';
 
+/* eslint import/no-mutable-exports: 0 */
 export let storage;
 
 /**
@@ -48,8 +49,7 @@ export function create(name, config) {
     // set storage
     options.storage = storage;
     // upload
-    const upload = multer(options)
-      .single(name);
+    const upload = multer(options).single(name);
     upload(req, res, (err) => {
       if (err) {
         req.multerErr = err;
