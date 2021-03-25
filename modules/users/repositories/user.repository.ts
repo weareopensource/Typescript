@@ -9,7 +9,11 @@ import User, { IUser } from '../models/user.model.mongoose';
 export async function list(searchFilter: RegExp, page, perPage) {
   const filter = searchFilter
     ? {
-        $or: [{ firstName: { $regex: `${searchFilter}`, $options: 'i' } }, { lastName: { $regex: `${searchFilter}`, $options: 'i' } }, { email: { $regex: `${searchFilter}`, $options: 'i' } }],
+        $or: [
+          { firstName: { $regex: `${searchFilter}`, $options: 'i' } },
+          { lastName: { $regex: `${searchFilter}`, $options: 'i' } },
+          { email: { $regex: `${searchFilter}`, $options: 'i' } },
+        ],
       }
     : {};
   return User.find(filter)

@@ -15,7 +15,8 @@ let seedOptions: any = {};
 // save the specified user with the password provided from the resolved promise
 const seedTheUser = (user) => async (password) => {
   user.password = password;
-  if (user.email === seedOptions.seedAdmin.email && process.env.NODE_ENV === 'production' && (await UserService.get(user))) return new AppError(`Failed due to local account already exists: ${user.email}`, {});
+  if (user.email === seedOptions.seedAdmin.email && process.env.NODE_ENV === 'production' && (await UserService.get(user)))
+    return new AppError(`Failed due to local account already exists: ${user.email}`, {});
   if (process.env.NODE_ENV === 'test' && (await UserService.get(user))) await UserService.deleteUser(user);
   try {
     const result = await UserService.create(user);

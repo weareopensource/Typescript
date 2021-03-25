@@ -118,7 +118,8 @@ export async function uploadByImageName(req, res, next, uploadImageName) {
     // options
     const sharpConfig = _.get(config, `uploads.${upload.metadata.kind}.sharp`);
     if (opts[1] && (!sharpConfig || !sharpConfig.sizes)) return error(res, 422, 'Unprocessable Entity', 'Size param not available')();
-    if (opts[1] && (!/^\d+$/.test(opts[1]) || !sharpConfig.sizes.includes(opts[1]))) return error(res, 422, 'Unprocessable Entity', 'Wrong size param')();
+    if (opts[1] && (!/^\d+$/.test(opts[1]) || !sharpConfig.sizes.includes(opts[1])))
+      return error(res, 422, 'Unprocessable Entity', 'Wrong size param')();
     if (opts[2] && (!sharpConfig || !sharpConfig.operations)) return error(res, 422, 'Unprocessable Entity', 'Operations param not available')();
     if (opts[2] && !sharpConfig.operations.includes(opts[2])) return error(res, 422, 'Unprocessable Entity', 'Operation param not available')();
 

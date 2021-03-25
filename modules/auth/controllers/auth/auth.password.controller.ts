@@ -120,7 +120,8 @@ export async function updatePassword(req: NodeRequest, res: Response) {
   try {
     user = await UserService.getBrut({ id: req.user.id });
     if (!user || !user.email) return error(res, 400, 'Bad Request', 'User is not found')();
-    if (!(await AuthService.comparePassword(req.body.currentPassword, user.password))) return error(res, 422, 'Unprocessable Entity', 'Current password is incorrect')();
+    if (!(await AuthService.comparePassword(req.body.currentPassword, user.password)))
+      return error(res, 422, 'Unprocessable Entity', 'Current password is incorrect')();
     if (req.body.newPassword !== req.body.verifyPassword) return error(res, 422, 'Unprocessable Entity', 'Passwords do not match')();
     password = AuthService.checkPassword(req.body.newPassword);
     user = await UserService.update(user, { password }, 'recover');

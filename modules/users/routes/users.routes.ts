@@ -22,7 +22,11 @@ export default (app) => {
 
   app.route('/api/users/password').post(passport.authenticate('jwt'), policy.isAllowed, updatePassword);
 
-  app.route('/api/users/avatar').all(passport.authenticate('jwt'), policy.isAllowed).post(multer.create('img', config.uploads.avatar), updateAvatar).delete(deleteAvatar);
+  app
+    .route('/api/users/avatar')
+    .all(passport.authenticate('jwt'), policy.isAllowed)
+    .post(multer.create('img', config.uploads.avatar), updateAvatar)
+    .delete(deleteAvatar);
 
   app.route('/api/users/data').all(passport.authenticate('jwt'), policy.isAllowed).get(usersData.getAnyUser).delete(usersData.deleteUser);
 
