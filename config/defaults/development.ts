@@ -15,6 +15,7 @@ export interface IConfig {
   log: Log;
   livereload: boolean;
   csrf?: CSRF;
+  bodyParser: BodyParser;
   cors: Cors;
   domain: string;
   sign: Sign;
@@ -48,6 +49,10 @@ export interface App {
 }
 
 export interface Blacklists {
+}
+
+export interface BodyParser {
+  limit: string;
 }
 
 export interface Cors {
