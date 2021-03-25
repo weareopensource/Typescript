@@ -10,7 +10,5 @@ const User = mongoose.model('User');
  * @return {Array} All users
  */
 export default function team() {
-  return User.find({ roles: 'admin' }, '-password -providerData -complementary')
-    .sort('-createdAt')
-    .exec();
+  return User.find({ roles: 'admin' }, '-password -providerData -complementary').sort('-createdAt').exec();
 }

@@ -11,13 +11,10 @@ import * as uploads from '../controllers/uploads.controller';
  */
 export default (app) => {
   // classic crud
-  app.route('/api/uploads/:uploadName').all(passport.authenticate('jwt'), policy.isAllowed)
-    .get(uploads.get)
-    .delete(policy.isOwner, uploads.deleteUpload); // delete
+  app.route('/api/uploads/:uploadName').all(passport.authenticate('jwt'), policy.isAllowed).get(uploads.get).delete(policy.isOwner, uploads.deleteUpload); // delete
 
   // classic crud
-  app.route('/api/uploads/images/:imageName').all(passport.authenticate('jwt'), policy.isAllowed)
-    .get(uploads.getSharp);
+  app.route('/api/uploads/images/:imageName').all(passport.authenticate('jwt'), policy.isAllowed).get(uploads.getSharp);
 
   // Finish by binding the task middleware
   app.param('uploadName', uploads.uploadByName);

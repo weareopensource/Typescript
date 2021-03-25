@@ -4,10 +4,11 @@
 import mongoose from 'mongoose';
 import Task from '../models/tasks.model.mongoose';
 
-const defaultPopulate = [{
-  path: 'user',
-  select: 'email firstName lastName',
-},
+const defaultPopulate = [
+  {
+    path: 'user',
+    select: 'email firstName lastName',
+  },
 ];
 
 /**
@@ -15,10 +16,7 @@ const defaultPopulate = [{
  * @return {Array} tasks
  */
 export async function list(filter?: any) {
-  return Task.find(filter)
-    .populate(defaultPopulate)
-    .sort('-createdAt')
-    .exec();
+  return Task.find(filter).populate(defaultPopulate).sort('-createdAt').exec();
 }
 
 /**
@@ -27,9 +25,7 @@ export async function list(filter?: any) {
  * @return {Object} task
  */
 export async function create(task) {
-  return new Task(task).save()
-    .then((doc) => doc.populate(defaultPopulate)
-      .execPopulate());
+  return new Task(task).save().then((doc) => doc.populate(defaultPopulate).execPopulate());
 }
 
 /**
@@ -48,9 +44,7 @@ export async function get(id) {
  * @return {Object} task
  */
 export async function update(task) {
-  return new Task(task).save()
-    .then((doc) => doc.populate(defaultPopulate)
-      .execPopulate());
+  return new Task(task).save().then((doc) => doc.populate(defaultPopulate).execPopulate());
 }
 
 /**
@@ -59,8 +53,7 @@ export async function update(task) {
  * @return {Object} confirmation of delete
  */
 export async function deleteTask(task) {
-  return Task.deleteOne({ _id: task.id })
-    .exec();
+  return Task.deleteOne({ _id: task.id }).exec();
 }
 
 /**
@@ -87,17 +80,19 @@ export async function stats() {
  * @return {Object} tasks
  */
 export async function importTask(tasks, filters) {
-  return Task.bulkWrite(tasks.map((task) => {
-    const filter = {};
-    filters.forEach((value) => {
-      filter[value] = task[value];
-    });
-    return {
-      updateOne: {
-        filter,
-        update: task,
-        upsert: true,
-      },
-    };
-  }));
+  return Task.bulkWrite(
+    tasks.map((task) => {
+      const filter = {};
+      filters.forEach((value) => {
+        filter[value] = task[value];
+      });
+      return {
+        updateOne: {
+          filter,
+          update: task,
+          upsert: true,
+        },
+      };
+    }),
+  );
 }

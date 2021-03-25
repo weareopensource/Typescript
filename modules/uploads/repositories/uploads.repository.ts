@@ -14,10 +14,7 @@ const Attachment = createModel({ bucketName: 'uploads', model: 'Uploads' });
  * @return {Array} uploads
  */
 export async function list(filter) {
-  return Uploads.find(filter)
-    .select('filename uploadDate contentType')
-    .sort('-createdAt')
-    .exec();
+  return Uploads.find(filter).select('filename uploadDate contentType').sort('-createdAt').exec();
 }
 
 /**
@@ -114,17 +111,19 @@ export function importUpload(uploads, filters, collection) {
   } catch (error) {
     model = mongoose.model(collection, schema);
   }
-  return model.bulkWrite(uploads.map((upload) => {
-    const filter = {};
-    filters.forEach((value) => {
-      filter[value] = upload[value];
-    });
-    return {
-      updateOne: {
-        filter,
-        update: upload,
-        upsert: true,
-      },
-    };
-  }));
+  return model.bulkWrite(
+    uploads.map((upload) => {
+      const filter = {};
+      filters.forEach((value) => {
+        filter[value] = upload[value];
+      });
+      return {
+        updateOne: {
+          filter,
+          update: upload,
+          upsert: true,
+        },
+      };
+    }),
+  );
 }

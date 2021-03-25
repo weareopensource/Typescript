@@ -433,7 +433,7 @@ describe('Configuration Tests:', () => {
         const fromMessage = getMessage({ message: 'error1' });
         expect(fromMessage).toBe('error1.');
 
-        const fromEmpty = getMessage({ });
+        const fromEmpty = getMessage({});
         expect(fromEmpty).toBe('error while retrieving the error :o : {}.');
       } catch (err) {
         console.log(err);
@@ -443,8 +443,9 @@ describe('Configuration Tests:', () => {
   });
 
   // Mongoose disconnect
-  afterAll(() => mongooseService.disconnect()
-    .catch((e) => {
+  afterAll(() =>
+    mongooseService.disconnect().catch((e) => {
       console.log(e);
-    }));
+    }),
+  );
 });

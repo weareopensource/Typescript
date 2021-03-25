@@ -16,7 +16,7 @@ import { IConfig } from './defaults/development';
 const getGlobbedPaths = (globPatterns: any, excludes?: any) => {
   // URL paths regex
   /* eslint no-useless-escape:0 */
-  const urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
+  const urlRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
   let output: any[] = [];
   // If glob pattern is array then we use each pattern in a recursive way, otherwise we use glob
   if (_.isArray(globPatterns)) {
@@ -113,7 +113,7 @@ const initGlobalConfig: () => IConfig = () => {
   );
 
   // convert string array from sys  to real array
-  environmentVars = _.mapValues(environmentVars, (v) => ((v[0] === '[' && v[v.length - 1] === ']') ? v.replace(/'/g, '').slice(1, -1).split(',') : v));
+  environmentVars = _.mapValues(environmentVars, (v) => (v[0] === '[' && v[v.length - 1] === ']' ? v.replace(/'/g, '').slice(1, -1).split(',') : v));
   const environmentConfigVars = {};
   _.forEach(environmentVars, (v, k) => {
     let value = v;
