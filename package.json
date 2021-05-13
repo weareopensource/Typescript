@@ -106,7 +106,7 @@
     "@types/hapi__joi": "^17.1.6",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
-    "@types/lodash": "^4.14.168",
+    "@types/lodash": "^4.14.169",
     "@types/mongoose": "^5.10.5",
     "@types/multer": "^1.4.5",
     "@types/nodemailer": "^6.4.1",
