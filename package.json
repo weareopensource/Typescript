@@ -103,7 +103,7 @@
     "@types/express": "^4.17.12",
     "@types/glob": "^7.1.4",
     "@types/gulp": "^4.0.8",
-    "@types/hapi__joi": "^17.1.6",
+    "@types/hapi__joi": "^17.1.7",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.3",
     "@types/lodash": "^4.14.170",
