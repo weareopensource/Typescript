@@ -267,10 +267,6 @@ const config: IConfig = {
     options: {
       user: '',
       pass: '',
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useFindAndModify: false,
       /**
        * Uncomment to enable ssl certificate based authentication to mongodb
        * servers. Adjust the settings below for your specific certificate

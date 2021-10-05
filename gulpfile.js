@@ -5,16 +5,16 @@ const tslib_1 = require("tslib");
 /**
  * Module dependencies.
  */
-const lodash_1 = tslib_1.__importDefault(require("lodash"));
-const gulp_1 = tslib_1.__importDefault(require("gulp"));
-const gulp_load_plugins_1 = tslib_1.__importDefault(require("gulp-load-plugins"));
+const lodash_1 = (0, tslib_1.__importDefault)(require("lodash"));
+const gulp_1 = (0, tslib_1.__importDefault)(require("gulp"));
+const gulp_load_plugins_1 = (0, tslib_1.__importDefault)(require("gulp-load-plugins"));
 const core_1 = require("@jest/core");
-const inquirer_1 = tslib_1.__importDefault(require("inquirer"));
-const assets_1 = tslib_1.__importDefault(require("./config/assets"));
-const config_1 = tslib_1.__importDefault(require("./config"));
-const mongooseService = tslib_1.__importStar(require("./lib/services/mongoose"));
-const seedService = tslib_1.__importStar(require("./lib/services/seed"));
-const plugins = gulp_load_plugins_1.default();
+const inquirer_1 = (0, tslib_1.__importDefault)(require("inquirer"));
+const assets_1 = (0, tslib_1.__importDefault)(require("./config/assets"));
+const config_1 = (0, tslib_1.__importDefault)(require("./config"));
+const mongooseService = (0, tslib_1.__importStar)(require("./lib/services/mongoose"));
+const seedService = (0, tslib_1.__importStar)(require("./lib/services/seed"));
+const plugins = (0, gulp_load_plugins_1.default)();
 // default node env if not define
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 // Nodemon
@@ -53,7 +53,7 @@ const watch = (done) => {
 exports.watch = watch;
 // Jest UT
 const jest = (done) => {
-    core_1.runCLI({}, ['.'])
+    (0, core_1.runCLI)({}, ['.'])
         .then((result) => {
         if (result.results && result.results.numFailedTests > 0)
             process.exit();
@@ -66,13 +66,13 @@ const jest = (done) => {
 exports.jest = jest;
 // Jest Watch
 const jestWatch = (done) => {
-    core_1.runCLI({ watch: true }, ['.']);
+    (0, core_1.runCLI)({ watch: true }, ['.']);
     done();
 };
 exports.jestWatch = jestWatch;
 // Jest UT
 const jestCoverage = (done) => {
-    core_1.runCLI({
+    (0, core_1.runCLI)({
         collectCoverage: true,
         collectCoverageFrom: assets_1.default.allJS,
         coverageDirectory: 'coverage',

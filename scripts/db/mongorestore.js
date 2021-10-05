@@ -5,11 +5,11 @@ const tslib_1 = require("tslib");
  * Module dependencies
  */
 const bson_1 = require("bson");
-const chalk_1 = tslib_1.__importDefault(require("chalk"));
-const path_1 = tslib_1.__importDefault(require("path"));
-const fs_1 = tslib_1.__importDefault(require("fs"));
-const mongooseService = tslib_1.__importStar(require("../../lib/services/mongoose"));
-const config_1 = tslib_1.__importDefault(require("../../config"));
+const chalk_1 = (0, tslib_1.__importDefault)(require("chalk"));
+const path_1 = (0, tslib_1.__importDefault)(require("path"));
+const fs_1 = (0, tslib_1.__importDefault)(require("fs"));
+const mongooseService = (0, tslib_1.__importStar)(require("../../lib/services/mongoose"));
+const config_1 = (0, tslib_1.__importDefault)(require("../../config"));
 const fsPromises = fs_1.default.promises;
 /**
  * Work
@@ -53,7 +53,7 @@ const seedData = async () => {
                 let bfIdx = 0;
                 const items = [];
                 while (bfIdx < buffer.length)
-                    bfIdx = bson_1.deserializeStream(buffer, bfIdx, 1, items, items.length, {});
+                    bfIdx = (0, bson_1.deserializeStream)(buffer, bfIdx, 1, items, items.length, {});
                 // insert
                 if (collection.split('.')[0] === 'uploads') {
                     const Service = require(path_1.default.resolve(`./modules/${collection.split('.')[0]}/services/${collection.split('.')[0]}.data.service`));

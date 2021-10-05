@@ -25,7 +25,7 @@ export async function list(filter?: any) {
  * @return {Object} task
  */
 export async function create(task) {
-  return new Task(task).save().then((doc) => doc.populate(defaultPopulate).execPopulate());
+  return new Task(task).save().then((doc) => doc.populate(defaultPopulate));
 }
 
 /**
@@ -44,7 +44,7 @@ export async function get(id) {
  * @return {Object} task
  */
 export async function update(task) {
-  return new Task(task).save().then((doc) => doc.populate(defaultPopulate).execPopulate());
+  return new Task(task).save().then((doc) => doc.populate(defaultPopulate));
 }
 
 /**
