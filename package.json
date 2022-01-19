@@ -105,7 +105,7 @@
     "@types/gulp": "^4.0.9",
     "@types/hapi__joi": "^17.1.8",
     "@types/jest": "^27.4.0",
-    "@types/jsonwebtoken": "^8.5.6",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.178",
     "@types/mongoose": "^5.11.97",
     "@types/multer": "^1.4.7",
