@@ -115,7 +115,7 @@
     "@types/passport-apple": "^1.1.1",
     "@types/passport-google-oauth20": "^2.0.11",
     "@types/passport-jwt": "^3.0.6",
-    "@types/sharp": "^0.29.5",
+    "@types/sharp": "^0.30.0",
     "@types/zxcvbn": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@weareopensource/conventional-changelog": "^1.7.0",
