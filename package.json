@@ -89,7 +89,7 @@
     "snyk": "^1.894.0",
     "supertest": "^6.2.2",
     "swig": "^1.4.2",
-    "winston": "3.6.0",
+    "winston": "3.7.2",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
