@@ -82,7 +82,7 @@
     "passport": "^0.6.0",
     "passport-apple": "^2.0.1",
     "passport-google-oauth20": "^2.0.0",
-    "passport-jwt": "^4.0.0",
+    "passport-jwt": "^4.0.1",
     "passport-local": "~1.0.0",
     "sequelize": "^6.21.4",
     "sharp": "^0.31.0",
