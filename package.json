@@ -117,7 +117,7 @@
     "@types/passport-jwt": "^3.0.6",
     "@types/sharp": "^0.30.2",
     "@types/zxcvbn": "^4.4.1",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@weareopensource/conventional-changelog": "^1.7.0",
     "commitizen": "^4.2.4",
     "coveralls": "~3.1.1",
