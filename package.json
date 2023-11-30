@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "@jest/core": "^28.1.0",
+    "@jest/core": "^29.0.0",
     "acl": "~0.4.11",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
@@ -64,7 +64,7 @@
     "cross-env": "^7.0.3",
     "express": "^4.18.1",
     "generate-password": "~1.7.0",
-    "glob": "~8.0.3",
+    "glob": "~9.0.0",
     "handlebars": "^4.7.7",
     "helmet": "~5.1.0",
     "js-base64": "^3.7.2",
